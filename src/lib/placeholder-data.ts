@@ -53,6 +53,20 @@ export type Distributor = {
   googleMapsEmbedUrl: string;
 };
 
+export type DeliveryPerson = {
+    id: string;
+    name: string;
+    image: string;
+    rating: number;
+    reviewsCount: number;
+    experience: string;
+    vehicle: string;
+    bio: string;
+    email: string;
+    phone: string;
+    reviews: Review[];
+};
+
 export type BlogPost = {
   id: string;
   title: string;
@@ -259,6 +273,35 @@ export const distributors: Distributor[] = [
     companyDescription: 'Authorized distributors for major beverage brands. We supply everything from soda syrups and concentrates to bottled water and juices, ensuring your customers always have a refreshing drink.',
     googleMapsEmbedUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d120652.290659618!2d72.91980534863281!3d19.213391700000003!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7b8fcfe76b2bd%3A0x58235552be4b6845!2sThane%2C%20Maharashtra!5e0!3m2!1sen!2sin!4v16788870 Thane%2C%20Mumbai%2C%20Maharashtra',
   }
+];
+
+export const deliveryPeople: DeliveryPerson[] = [
+    {
+        id: 'dp1',
+        name: 'Suresh Yadav',
+        image: 'https://i.pravatar.cc/150?u=suresh',
+        rating: 4.9,
+        reviewsCount: 88,
+        experience: '3 years',
+        vehicle: 'Motorbike',
+        bio: 'Reliable and punctual delivery partner with extensive knowledge of Pune city routes. Committed to ensuring your supplies arrive on time, every time.',
+        email: 'suresh.y@example.com',
+        phone: '+91 9876543211',
+        reviews: reviews.slice(0, 2),
+    },
+    {
+        id: 'dp2',
+        name: 'Amit Kumar',
+        image: 'https://i.pravatar.cc/150?u=amit',
+        rating: 4.7,
+        reviewsCount: 65,
+        experience: '2 years',
+        vehicle: 'Scooter',
+        bio: 'Friendly and efficient delivery partner specializing in the Pimpri-Chinchwad area. I handle all packages with care.',
+        email: 'amit.k@example.com',
+        phone: '+91 9876543212',
+        reviews: reviews.slice(1, 3),
+    },
 ];
 
 export const blogPosts: BlogPost[] = [
