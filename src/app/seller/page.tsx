@@ -24,7 +24,7 @@ export default function SellerPage() {
               Join our platform to connect with a larger audience, streamline your operations, and focus on what you do best: making amazing food.
             </p>
              <Button asChild size="lg" className="mt-8">
-                <Link href="/signup">Get Started Today</Link>
+                <Link href="/seller/apply">Get Started Today</Link>
             </Button>
         </div>
       </section>
@@ -65,7 +65,7 @@ export default function SellerPage() {
                 Signing up is quick and easy. Click the button below to create your account and start building your online presence.
             </p>
              <Button asChild size="lg">
-                <Link href="/signup">Create Your Vendor Account</Link>
+                <Link href="/seller/apply">Create Your Vendor Account</Link>
             </Button>
         </div>
       </section>
