@@ -58,9 +58,6 @@ export function Header() {
           <Link href="/distributors" className="transition-colors hover:text-primary">
             Distributors
           </Link>
-           <Link href="/delivery" className="transition-colors hover:text-primary">
-            Delivery
-          </Link>
           {user && (
             <Link href="/dashboard" className="transition-colors hover:text-primary">
               Dashboard
