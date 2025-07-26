@@ -1,6 +1,5 @@
 'use server';
 
-import { run } from 'genkit/flow';
 import { productNamerFlow } from '@/ai/flows/productNamer';
 
 export async function getRecommendations(productName: string): Promise<{
@@ -12,7 +11,7 @@ export async function getRecommendations(productName: string): Promise<{
     return { success: true, data: [] };
   }
   try {
-    const result = await run(productNamerFlow, productName);
+    const result = await productNamerFlow(productName);
     return { success: true, data: result };
   } catch (e: any) {
     console.error('Error running productNamerFlow:', e);
