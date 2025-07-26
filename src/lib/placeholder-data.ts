@@ -58,6 +58,17 @@ export type DeliveryPerson = {
   reviews: Review[];
 };
 
+export type BlogPost = {
+  id: string;
+  title: string;
+  author: string;
+  date: string;
+  excerpt: string;
+  image: string;
+  category: string;
+  authorImage: string;
+};
+
 const reviews: Review[] = [
     { id: 'r1', author: 'Jane Doe', rating: 4.5, comment: "Absolutely delicious tacos, the best I've had in a while! The salsa was perfectly spicy.", date: '2 days ago' },
     { id: 'r2', author: 'John Smith', rating: 5, comment: "A must-try! The Chole Bhature is out of this world. Quick service too.", date: '5 days ago' },
@@ -223,3 +234,48 @@ export const deliveryPersonnel: DeliveryPerson[] = [
     reviews: reviews.slice(0, 1),
   },
 ];
+
+export const blogPosts: BlogPost[] = [
+  {
+    id: 'bp1',
+    title: 'The Rise of Ghost Kitchens in Urban Areas',
+    author: 'Alex Chen',
+    authorImage: 'https://i.pravatar.cc/150?u=alex',
+    date: 'July 22, 2024',
+    excerpt: 'Explore how ghost kitchens are changing the food delivery landscape and what it means for traditional street vendors.',
+    image: 'https://placehold.co/600x400.png',
+    category: 'Industry Trends',
+  },
+  {
+    id: 'bp2',
+    title: 'Top 5 Must-Try Street Foods in New York City',
+    author: 'Brenda Smith',
+    authorImage: 'https://i.pravatar.cc/150?u=brenda',
+    date: 'July 18, 2024',
+    excerpt: 'Join us on a culinary tour of the Big Apple as we highlight the most iconic street food dishes you have to try.',
+    image: 'https://placehold.co/600x400.png',
+    category: 'Food & Travel',
+  },
+  {
+    id: 'bp3',
+    title: 'How to Market Your Food Stall on a Budget',
+    author: 'Charlie Kim',
+    authorImage: 'https://i.pravatar.cc/150?u=charlie',
+    date: 'July 15, 2024',
+    excerpt: 'Learn effective and low-cost marketing strategies to attract more customers to your street food business.',
+    image: 'https://placehold.co/600x400.png',
+    category: 'Business Tips',
+  },
+   {
+    id: 'bp4',
+    title: 'The Importance of Food Safety for Street Vendors',
+    author: 'Brenda Smith',
+    authorImage: 'https://i.pravatar.cc/150?u=brenda',
+    date: 'July 10, 2024',
+    excerpt: 'A deep dive into food safety regulations and best practices to ensure your customers are safe and your business is compliant.',
+    image: 'https://placehold.co/600x400.png',
+    category: 'Vendor Help',
+  },
+];
+
+    

@@ -26,6 +26,9 @@ export function Header() {
            <Link href="/delivery" className="transition-colors hover:text-primary">
             Delivery
           </Link>
+          <Link href="/blog" className="transition-colors hover:text-primary">
+            Blog
+          </Link>
           <Link href="/about" className="transition-colors hover:text-primary">
             About Us
           </Link>
@@ -56,3 +59,5 @@ export function Header() {
     </header>
   );
 }
+
+    
