@@ -10,7 +10,7 @@ import { Input } from '@/components/ui/input';
 import Link from 'next/link';
 import { Loader2 } from 'lucide-react';
 import { useState } from 'react';
-import { createUserWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
+import { createUserWithEmailAndPassword, signInWithPopup, AuthErrorCodes } from 'firebase/auth';
 import { auth, googleProvider } from '@/lib/firebase';
 import { useToast } from '@/hooks/use-toast';
 import { useRouter } from 'next/navigation';
@@ -63,11 +63,14 @@ export function SignUpForm() {
       });
       router.push('/dashboard');
     } catch (error: any) {
-      console.error('Sign up error:', error);
+      let description = 'There was a problem with your request.';
+      if (error.code === AuthErrorCodes.EMAIL_EXISTS) {
+        description = 'This email is already in use. Please sign in or use a different email.';
+      }
       toast({
         variant: 'destructive',
-        title: 'Uh oh! Something went wrong.',
-        description: error.message || 'There was a problem with your request.',
+        title: 'Sign-up Failed',
+        description,
       });
     } finally {
       setIsLoading(false);
