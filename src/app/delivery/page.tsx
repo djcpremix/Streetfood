@@ -35,7 +35,7 @@ export default function DeliveryPage() {
               Join our network of delivery partners and earn money on your own schedule. Deliver essential supplies to local street food vendors and be a vital part of your community's food scene.
             </p>
              <Button asChild size="lg" className="mt-8">
-                <Link href="/signup">Apply Now</Link>
+                <Link href="/delivery/apply">Apply Now</Link>
             </Button>
         </div>
       </section>
@@ -76,7 +76,7 @@ export default function DeliveryPage() {
                 Signing up is simple. Click the button below to start your application and you could be making deliveries in just a few days.
             </p>
              <Button asChild size="lg">
-                <Link href="/signup">Start Earning Today</Link>
+                <Link href="/delivery/apply">Start Earning Today</Link>
             </Button>
         </div>
       </section>
