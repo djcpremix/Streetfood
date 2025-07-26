@@ -142,7 +142,7 @@ export function MenuItemManager() {
                 <Image src={item.image} alt={item.name} width={80} height={80} className="rounded-md object-cover border" data-ai-hint="food item" />
                 <div className="flex-1">
                   <CardTitle>{item.name}</CardTitle>
-                  <p className="text-xl font-semibold text-primary mt-1">₹{item.price.toFixed(2)}</p>
+                  <p className="text-xl font-semibold text-primary">₹{item.price.toFixed(2)}</p>
                 </div>
               </CardHeader>
               <CardContent className="flex-grow">
