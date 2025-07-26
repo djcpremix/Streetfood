@@ -1,15 +1,18 @@
 'use client';
 
 import React, { createContext, useState, useContext, ReactNode } from 'react';
-import type { RawMaterial } from '@/lib/placeholder-data';
+import type { RawMaterial, MenuItem } from '@/lib/placeholder-data';
 
-interface CartItem extends RawMaterial {
+// A more generic item type that can be added to the cart
+type CartableItem = (RawMaterial | MenuItem) & { unit?: string };
+
+interface CartItem extends CartableItem {
   quantity: number;
 }
 
 interface CartContextType {
   cart: CartItem[];
-  addToCart: (item: RawMaterial) => void;
+  addToCart: (item: CartableItem) => void;
   // In the future, we can add more functions like removeFromCart, updateQuantity, etc.
 }
 
@@ -18,7 +21,7 @@ const CartContext = createContext<CartContextType | undefined>(undefined);
 export const CartProvider = ({ children }: { children: ReactNode }) => {
   const [cart, setCart] = useState<CartItem[]>([]);
 
-  const addToCart = (item: RawMaterial) => {
+  const addToCart = (item: CartableItem) => {
     setCart((prevCart) => {
       const existingItem = prevCart.find((cartItem) => cartItem.id === item.id);
       if (existingItem) {
