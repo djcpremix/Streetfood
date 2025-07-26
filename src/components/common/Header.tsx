@@ -10,6 +10,7 @@ import { onAuthStateChanged, signOut, User } from 'firebase/auth';
 import { auth } from '@/lib/firebase';
 import { useToast } from '@/hooks/use-toast';
 import { useRouter } from 'next/navigation';
+import { NoSsr } from './NoSsr';
 
 export function Header() {
   const { cart } = useCart();
@@ -51,19 +52,21 @@ export function Header() {
           <UtensilsCrossed className="h-6 w-6 text-primary" />
           <span className="font-bold font-headline text-lg">StreetVendorConnect</span>
         </Link>
-        <nav className="hidden md:flex items-center space-x-6 text-sm font-medium">
-          <Link href="/" className="transition-colors hover:text-primary">
-            Discover
-          </Link>
-          <Link href="/distributors" className="transition-colors hover:text-primary">
-            Distributors
-          </Link>
-          {user && (
-            <Link href="/dashboard" className="transition-colors hover:text-primary">
-              Dashboard
+        <NoSsr>
+          <nav className="hidden md:flex items-center space-x-6 text-sm font-medium">
+            <Link href="/" className="transition-colors hover:text-primary">
+              Discover
             </Link>
-          )}
-        </nav>
+            <Link href="/distributors" className="transition-colors hover:text-primary">
+              Distributors
+            </Link>
+            {user && (
+              <Link href="/dashboard" className="transition-colors hover:text-primary">
+                Dashboard
+              </Link>
+            )}
+          </nav>
+        </NoSsr>
         <div className="flex flex-1 items-center justify-end space-x-4">
           <Button variant="ghost" size="icon" className="relative" asChild>
             <Link href="/cart">
@@ -76,18 +79,20 @@ export function Header() {
               <span className="sr-only">Shopping Cart</span>
             </Link>
           </Button>
-          {user ? (
-            <Button variant="ghost" onClick={handleSignOut}>Log Out</Button>
-          ) : (
-            <>
-              <Button variant="ghost" asChild>
-                <Link href="/login">Log In</Link>
-              </Button>
-              <Button asChild>
-                <Link href="/signup">Sign Up</Link>
-              </Button>
-            </>
-          )}
+          <NoSsr>
+            {user ? (
+              <Button variant="ghost" onClick={handleSignOut}>Log Out</Button>
+            ) : (
+              <>
+                <Button variant="ghost" asChild>
+                  <Link href="/login">Log In</Link>
+                </Button>
+                <Button asChild>
+                  <Link href="/signup">Sign Up</Link>
+                </Button>
+              </>
+            )}
+          </NoSsr>
         </div>
       </div>
     </header>
