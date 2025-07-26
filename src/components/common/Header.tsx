@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { UtensilsCrossed, UserCircle } from 'lucide-react';
+import { UtensilsCrossed, LayoutDashboard } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 export function Header() {
@@ -17,11 +17,16 @@ export function Header() {
           <Link href="/recommendations" className="transition-colors hover:text-primary">
             AI Tools
           </Link>
+          <Link href="/dashboard" className="transition-colors hover:text-primary">
+            Dashboard
+          </Link>
         </nav>
         <div className="flex flex-1 items-center justify-end space-x-4">
-          <Button>
-            <UserCircle className="mr-2 h-5 w-5" />
-            Sign In
+          <Button asChild>
+            <Link href="/dashboard">
+              <LayoutDashboard className="mr-2 h-5 w-5" />
+              Vendor Dashboard
+            </Link>
           </Button>
         </div>
       </div>
