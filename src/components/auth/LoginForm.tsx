@@ -10,7 +10,7 @@ import { Input } from '@/components/ui/input';
 import Link from 'next/link';
 import { Loader2 } from 'lucide-react';
 import { useState } from 'react';
-import { signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
+import { signInWithEmailAndPassword, signInWithPopup, AuthErrorCodes } from 'firebase/auth';
 import { auth, googleProvider } from '@/lib/firebase';
 import { useToast } from '@/hooks/use-toast';
 import { useRouter } from 'next/navigation';
@@ -55,10 +55,14 @@ export function LoginForm() {
       router.push('/dashboard');
     } catch (error: any) {
       console.error('Sign in error:', error);
+      let description = 'There was a problem with your request.';
+      if (error.code === AuthErrorCodes.INVALID_LOGIN_CREDENTIALS) {
+        description = 'Invalid email or password. Please try again.';
+      }
       toast({
         variant: 'destructive',
-        title: 'Uh oh! Something went wrong.',
-        description: error.message || 'There was a problem with your request.',
+        title: 'Sign-in Failed',
+        description,
       });
     } finally {
       setIsLoading(false);
