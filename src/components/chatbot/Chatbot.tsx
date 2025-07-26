@@ -1,12 +1,13 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { chatbot } from '@/ai/flows/chatbot';
 import { Bot, MessageSquare, Send, X, Loader2 } from 'lucide-react';
+import Link from 'next/link';
 
 type Message = {
   text: string;
@@ -14,10 +15,38 @@ type Message = {
 };
 
 const initialOptions = [
-    { label: "Find Supplies", message: "I want to find supplies" },
-    { label: "Become a Vendor", message: "How do I become a vendor?" },
-    { label: "Become a Delivery Partner", message: "How do I become a delivery partner?" },
+    { label: "Find Supplies", message: "How do I find supplies?" },
+    { label: "Become a Seller", message: "How do I sell on the platform?" },
+    { label: "Join as Delivery Partner", message: "How can I become a delivery partner?" },
 ]
+
+function ChatMessageContent({ text }: { text: string }) {
+  const linkRegex = /\[([^\]]+)\]\(([^)]+)\)/g;
+  const parts = [];
+  let lastIndex = 0;
+  let match;
+
+  while ((match = linkRegex.exec(text)) !== null) {
+    const [fullMatch, linkText, url] = match;
+    const precedingText = text.slice(lastIndex, match.index);
+    if (precedingText) {
+      parts.push(<span key={lastIndex}>{precedingText}</span>);
+    }
+    parts.push(
+      <Link key={match.index} href={url} className="text-primary underline hover:text-primary/80">
+        {linkText}
+      </Link>
+    );
+    lastIndex = match.index + fullMatch.length;
+  }
+
+  const remainingText = text.slice(lastIndex);
+  if (remainingText) {
+    parts.push(<span key={lastIndex + 1}>{remainingText}</span>);
+  }
+
+  return <>{parts}</>;
+}
 
 export function Chatbot() {
   const [isOpen, setIsOpen] = useState(false);
@@ -29,6 +58,16 @@ export function Chatbot() {
   ]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const scrollAreaRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (scrollAreaRef.current) {
+        const viewport = scrollAreaRef.current.querySelector('div[data-radix-scroll-area-viewport]');
+        if (viewport) {
+            viewport.scrollTop = viewport.scrollHeight;
+        }
+    }
+  }, [messages, isLoading]);
 
   const handleSendMessage = async (messageText = input) => {
     if (!messageText.trim()) return;
@@ -80,7 +119,7 @@ export function Chatbot() {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <ScrollArea className="h-80 pr-4">
+              <ScrollArea className="h-80 pr-4" ref={scrollAreaRef}>
                 <div className="space-y-4">
                   {messages.map((msg, index) => (
                     <div key={index} className={`flex items-end gap-2 ${msg.sender === 'user' ? 'justify-end' : ''}`}>
@@ -91,7 +130,9 @@ export function Chatbot() {
                             : 'bg-muted'
                         }`}
                       >
-                        <p className="text-sm">{msg.text}</p>
+                        <p className="text-sm">
+                           <ChatMessageContent text={msg.text} />
+                        </p>
                       </div>
                     </div>
                   ))}
@@ -103,8 +144,9 @@ export function Chatbot() {
                         </div>
                     </div>
                   )}
-                   {messages.length === 1 && (
+                   {messages.length === 1 && !isLoading && (
                      <div className="flex flex-col items-start gap-2 pt-4">
+                        <p className="text-sm text-muted-foreground">Or choose an option:</p>
                         {initialOptions.map((opt) => (
                             <Button key={opt.label} variant="outline" size="sm" onClick={() => handleOptionClick(opt.message)}>
                                 {opt.label}
@@ -129,7 +171,7 @@ export function Chatbot() {
                   placeholder="Ask a question..."
                   disabled={isLoading}
                 />
-                <Button type="submit" size="icon" disabled={isLoading}>
+                <Button type="submit" size="icon" disabled={isLoading || !input.trim()}>
                   <Send className="h-4 w-4" />
                 </Button>
               </form>
