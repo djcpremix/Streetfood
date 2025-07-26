@@ -13,11 +13,12 @@ const firebaseConfig = {
 
 // Initialize Firebase for SSR
 let app: FirebaseApp;
-if (!getApps().length) {
+if (getApps().length === 0) {
   app = initializeApp(firebaseConfig);
 } else {
   app = getApp();
 }
+
 
 const auth = getAuth(app);
 const googleProvider = new GoogleAuthProvider();
