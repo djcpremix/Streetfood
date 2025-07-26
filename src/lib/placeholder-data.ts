@@ -27,6 +27,24 @@ export type Vendor = {
   reviews: Review[];
 };
 
+export type RawMaterial = {
+  id: string;
+  name: string;
+  price: number;
+  unit: string;
+  image: string;
+};
+
+export type Distributor = {
+  id: string;
+  name: string;
+  category: string;
+  rating: number;
+  reviewsCount: number;
+  image: string;
+  products: RawMaterial[];
+};
+
 const reviews: Review[] = [
     { id: 'r1', author: 'Jane Doe', rating: 4.5, comment: "Absolutely delicious tacos, the best I've had in a while! The salsa was perfectly spicy.", date: '2 days ago' },
     { id: 'r2', author: 'John Smith', rating: 5, comment: "A must-try! The Chole Bhature is out of this world. Quick service too.", date: '5 days ago' },
@@ -104,5 +122,52 @@ export const vendors: Vendor[] = [
     address: '101 Pizza Pl, Berkeley, CA',
     menu: menus.pizza,
     reviews: reviews,
+  },
+];
+
+const rawMaterials: { [key: string]: RawMaterial[] } = {
+  vegetables: [
+    { id: 'rm1', name: 'Onions', price: 40, unit: 'kg', image: 'https://placehold.co/300x300.png' },
+    { id: 'rm2', name: 'Potatoes', price: 30, unit: 'kg', image: 'https://placehold.co/300x300.png' },
+    { id: 'rm3', name: 'Tomatoes', price: 50, unit: 'kg', image: 'https://placehold.co/300x300.png' },
+  ],
+  dairy: [
+    { id: 'rm4', name: 'Amul Cheese', price: 250, unit: 'kg', image: 'https://placehold.co/300x300.png' },
+    { id: 'rm5', name: 'Paneer', price: 400, unit: 'kg', image: 'https://placehold.co/300x300.png' },
+    { id: 'rm6', name: 'Yogurt', price: 80, unit: 'kg', image: 'https://placehold.co/300x300.png' },
+  ],
+  meats: [
+    { id: 'rm7', name: 'Chicken Breast', price: 350, unit: 'kg', image: 'https://placehold.co/300x300.png' },
+    { id: 'rm8', name: 'Mutton', price: 700, unit: 'kg', image: 'https://placehold.co/300x300.png' },
+  ],
+};
+
+export const distributors: Distributor[] = [
+  {
+    id: 'd1',
+    name: 'Fresh Veggies Co.',
+    category: 'Fresh Produce',
+    rating: 4.8,
+    reviewsCount: 150,
+    image: 'https://placehold.co/600x400.png',
+    products: rawMaterials.vegetables,
+  },
+  {
+    id: 'd2',
+    name: 'Modern Dairy',
+    category: 'Dairy Products',
+    rating: 4.9,
+    reviewsCount: 210,
+    image: 'https://placehold.co/600x400.png',
+    products: rawMaterials.dairy,
+  },
+  {
+    id: 'd3',
+    name: 'Quality Meats Inc.',
+    category: 'Butcher',
+    rating: 4.7,
+    reviewsCount: 95,
+    image: 'https://placehold.co/600x400.png',
+    products: rawMaterials.meats,
   },
 ];

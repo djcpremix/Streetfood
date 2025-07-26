@@ -14,6 +14,9 @@ export function Header() {
           <Link href="/" className="transition-colors hover:text-primary">
             Discover
           </Link>
+          <Link href="/distributors" className="transition-colors hover:text-primary">
+            Distributors
+          </Link>
           <Link href="/recommendations" className="transition-colors hover:text-primary">
             AI Tools
           </Link>
