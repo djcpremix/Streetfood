@@ -45,6 +45,18 @@ export type Distributor = {
   products: RawMaterial[];
 };
 
+export type DeliveryPerson = {
+  id: string;
+  name: string;
+  experience: string;
+  rating: number;
+  reviewsCount: number;
+  vehicle: string;
+  image: string;
+  bio: string;
+  deliveryRange: string;
+};
+
 const reviews: Review[] = [
     { id: 'r1', author: 'Jane Doe', rating: 4.5, comment: "Absolutely delicious tacos, the best I've had in a while! The salsa was perfectly spicy.", date: '2 days ago' },
     { id: 'r2', author: 'John Smith', rating: 5, comment: "A must-try! The Chole Bhature is out of this world. Quick service too.", date: '5 days ago' },
@@ -171,3 +183,41 @@ export const distributors: Distributor[] = [
     products: rawMaterials.meats,
   },
 ];
+
+export const deliveryPersonnel: DeliveryPerson[] = [
+  {
+    id: 'dp1',
+    name: 'Ravi Kumar',
+    experience: '3 years',
+    rating: 4.9,
+    reviewsCount: 215,
+    vehicle: 'Motorbike',
+    image: 'https://i.pravatar.cc/150?u=dp1',
+    bio: 'Fast and reliable delivery partner with extensive knowledge of the city. Always on time.',
+    deliveryRange: '15 km radius',
+  },
+  {
+    id: 'dp2',
+    name: 'Sunita Sharma',
+    experience: '2 years',
+    rating: 4.8,
+    reviewsCount: 180,
+    vehicle: 'Scooter',
+    image: 'https://i.pravatar.cc/150?u=dp2',
+    bio: 'Friendly and professional, ensuring your orders are handled with care.',
+    deliveryRange: '10 km radius',
+  },
+  {
+    id: 'dp3',
+    name: 'Amit Singh',
+    experience: '5 years',
+    rating: 5.0,
+    reviewsCount: 350,
+    vehicle: 'Motorbike',
+    image: 'https://i.pravatar.cc/150?u=dp3',
+    bio: 'Veteran delivery expert. Known for exceptional service and speed.',
+    deliveryRange: '20 km radius',
+  },
+];
+
+    
