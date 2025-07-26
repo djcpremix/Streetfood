@@ -38,7 +38,7 @@ export default function ContactPage() {
               <div>
                 <h3 className="text-lg font-semibold">Phone</h3>
                 <p className="text-muted-foreground">Mon-Fri, 9am-5pm</p>
-                <a href="tel:+1234567890" className="text-primary hover:underline">+1 (234) 567-890</a>
+                <a href="tel:+919876543210" className="text-primary hover:underline">+91 98765 43210</a>
               </div>
             </div>
              <div className="flex items-start gap-4">
@@ -48,7 +48,7 @@ export default function ContactPage() {
               <div>
                 <h3 className="text-lg font-semibold">Office</h3>
                 <p className="text-muted-foreground">123 Foodie Lane</p>
-                <p className="text-muted-foreground">San Francisco, CA 94105</p>
+                <p className="text-muted-foreground">Pune, Maharashtra 411001</p>
               </div>
             </div>
           </div>

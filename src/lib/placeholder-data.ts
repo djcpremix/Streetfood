@@ -47,6 +47,10 @@ export type Distributor = {
   ownerName: string;
   location: string;
   companyRegistered: boolean;
+  phone: string;
+  email: string;
+  companyDescription: string;
+  googleMapsEmbedUrl: string;
 };
 
 export type DeliveryPerson = {
@@ -149,6 +153,10 @@ export const distributors: Distributor[] = [
     ownerName: 'Ramesh Patel',
     location: 'Market Yard, Pune',
     companyRegistered: true,
+    phone: '+91 98765 43210',
+    email: 'contact@punefresh.com',
+    companyDescription: 'Pune Fresh Produce has been a leading supplier of fresh, locally-sourced vegetables since 2005. We partner with over 50 farms in the Pune district to bring the best quality produce to our customers. We are committed to fair trade practices and sustainable agriculture.',
+    googleMapsEmbedUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3783.539373975766!2d73.87442781539668!3d18.499596074288!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc2c1c444a7f0cf%3A0x857cf30a25698b67!2sMarket%20Yard%2C%20Pune%2C%20Maharashtra!5e0!3m2!1sen!2sin!4v16788865 Market%20Yard%2C%20Pune%2C%20Maharashtra',
   },
   {
     id: 'd2',
@@ -161,6 +169,10 @@ export const distributors: Distributor[] = [
     ownerName: 'Sunita Pawar',
     location: 'MIDC, Solapur',
     companyRegistered: true,
+    phone: '+91 91234 56789',
+    email: 'sales@solapurgrains.com',
+    companyDescription: 'Established in 1998, Solapur Grains & Flour Mill is a trusted name for high-quality grains and flours. We use traditional stone-milling techniques to preserve the nutritional value and taste of our products. Our Jowar and Besan are renowned across Maharashtra.',
+    googleMapsEmbedUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d60822.75344214476!2d75.87321494863279!3d17.674996400000003!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc4181ab96c9345%3A0x8c78c769358117ca!2sSolapur%2C%20Maharashtra!5e0!3m2!1sen!2sin!4v167888661 Solapur%2C%20Maharashtra',
   },
   {
     id: 'd3',
@@ -173,6 +185,10 @@ export const distributors: Distributor[] = [
     ownerName: 'Vikram Bhosle',
     location: 'Kolhapur City',
     companyRegistered: false,
+    phone: '+91 99887 76655',
+    email: 'vikram.b@kolhapurspice.co',
+    companyDescription: '',
+    googleMapsEmbedUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d61142.45933994452!2d74.2005517486328!3d16.708021!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc1000cdec07a29%3A0xe76526a5a526c518!2sKolhapur%2C%20Maharashtra!5e0!3m2!1sen!2sin!4v16788866 Kolhapur%2C%20Maharashtra',
   },
 ];
 
@@ -288,5 +304,3 @@ export const blogPosts: BlogPost[] = [
     `
   },
 ];
-
-    
