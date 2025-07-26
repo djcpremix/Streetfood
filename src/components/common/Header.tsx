@@ -1,3 +1,4 @@
+
 'use client';
 
 import Link from 'next/link';
@@ -48,26 +49,26 @@ export function Header() {
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center">
-        <Link href="/" className="mr-6 flex items-center space-x-2">
+        <Link href="/" className="mr-auto flex items-center space-x-2">
           <UtensilsCrossed className="h-6 w-6 text-primary" />
           <span className="font-bold font-headline text-lg">StreetVendorConnect</span>
         </Link>
-        <NoSsr>
-          <nav className="hidden md:flex items-center space-x-6 text-sm font-medium">
-            <Link href="/" className="transition-colors hover:text-primary">
-              Discover
-            </Link>
-            <Link href="/distributors" className="transition-colors hover:text-primary">
-              Distributors
-            </Link>
-            {user && (
-              <Link href="/dashboard" className="transition-colors hover:text-primary">
-                Dashboard
+        <div className="flex items-center justify-end space-x-4">
+          <NoSsr>
+            <nav className="hidden md:flex items-center space-x-6 text-sm font-medium">
+              <Link href="/" className="transition-colors hover:text-primary">
+                Discover
               </Link>
-            )}
-          </nav>
-        </NoSsr>
-        <div className="flex flex-1 items-center justify-end space-x-4">
+              <Link href="/distributors" className="transition-colors hover:text-primary">
+                Distributors
+              </Link>
+              {user && (
+                <Link href="/dashboard" className="transition-colors hover:text-primary">
+                  Dashboard
+                </Link>
+              )}
+            </nav>
+          </NoSsr>
           <Button variant="ghost" size="icon" className="relative" asChild>
             <Link href="/cart">
               <ShoppingCart className="h-5 w-5" />
