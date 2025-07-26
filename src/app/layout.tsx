@@ -4,6 +4,7 @@ import { Toaster } from '@/components/ui/toaster';
 import { Header } from '@/components/common/Header';
 import { CartProvider } from '@/context/CartContext';
 import { Footer } from '@/components/common/Footer';
+import { Chatbot } from '@/components/chatbot/Chatbot';
 
 export const metadata: Metadata = {
   title: 'StreetVendorConnect',
@@ -29,6 +30,7 @@ export default function RootLayout({
             {children}
           </main>
           <Footer />
+          <Chatbot />
           <Toaster />
         </CartProvider>
       </body>
