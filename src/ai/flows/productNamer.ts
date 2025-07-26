@@ -1,6 +1,11 @@
-import { defineFlow } from '@genkit-ai/flow';
-import { z } from 'zod';
-import { ai } from '../genkit';
+'use server';
+/**
+ * @fileOverview An AI-powered product namer.
+ *
+ * - productNamerFlow - A function that suggests creative names for a street food item.
+ */
+import {z} from 'zod';
+import {ai} from '../genkit';
 
 const productNamerPrompt = `You are an expert at naming street food items.
 Given a product name, generate 5 alternative, creative, and trending names for it.
@@ -10,7 +15,7 @@ Example input: Samosa
 Example output: ["Samosa Pockets", "Spicy Potato Triangles", "Golden Parcels", "Samosa Bites", "Crispy Veggie Triangles"]
 `;
 
-export const productNamerFlow = defineFlow(
+export const productNamerFlow = ai.defineFlow(
   {
     name: 'productNamerFlow',
     inputSchema: z.string(),

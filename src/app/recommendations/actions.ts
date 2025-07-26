@@ -1,6 +1,6 @@
 'use server';
 
-import { run } from '@genkit-ai/flow';
+import { run } from 'genkit/flow';
 import { productNamerFlow } from '@/ai/flows/productNamer';
 
 export async function getRecommendations(productName: string): Promise<{
