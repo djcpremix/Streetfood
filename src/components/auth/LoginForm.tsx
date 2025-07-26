@@ -54,7 +54,6 @@ export function LoginForm() {
       });
       router.push('/dashboard');
     } catch (error: any) {
-      console.error('Sign in error:', error);
       let description = 'There was a problem with your request.';
       if (error.code === AuthErrorCodes.INVALID_LOGIN_CREDENTIALS) {
         description = 'Invalid email or password. Please try again.';
@@ -79,7 +78,6 @@ export function LoginForm() {
       });
       router.push('/dashboard');
     } catch (error: any) {
-      console.error('Google sign in error:', error);
       toast({
         variant: 'destructive',
         title: 'Google Sign-In Failed',
