@@ -18,7 +18,7 @@ export function VendorMenu({ menu }: VendorMenuProps) {
             <CardDescription className="h-10 text-ellipsis overflow-hidden">{item.description}</CardDescription>
           </CardHeader>
           <CardContent className="flex items-center justify-between mt-auto pt-0">
-            <p className="text-xl font-semibold text-primary">${item.price.toFixed(2)}</p>
+            <p className="text-xl font-semibold text-primary">₹{item.price.toFixed(2)}</p>
             <Button size="sm">
               <Plus className="h-4 w-4 mr-1" /> Add
             </Button>

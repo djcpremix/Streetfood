@@ -10,7 +10,6 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { PlusCircle, Utensils, Loader2, Trash2 } from 'lucide-react';
-import { vendors } from '@/lib/placeholder-data';
 import type { MenuItem } from '@/lib/placeholder-data';
 import { addMenuItem } from '@/app/dashboard/actions';
 import Image from 'next/image';
@@ -21,11 +20,8 @@ const menuItemSchema = z.object({
   price: z.coerce.number().positive('Price must be a positive number'),
 });
 
-// We'll use the first vendor's menu as a stand-in for the logged-in user's menu.
-const initialMenuItems = vendors[0].menu;
-
 export function MenuItemManager() {
-  const [menuItems, setMenuItems] = useState<MenuItem[]>(initialMenuItems);
+  const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isAdding, setIsAdding] = useState(false);
 
@@ -100,7 +96,7 @@ export function MenuItemManager() {
                     <FormItem>
                       <FormLabel>Price</FormLabel>
                       <FormControl>
-                        <Input type="number" step="0.01" placeholder="e.g., 12.99" {...field} />
+                        <Input type="number" step="0.01" placeholder="e.g., 150.00" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -133,27 +129,34 @@ export function MenuItemManager() {
         </Card>
       )}
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {menuItems.map((item) => (
-          <Card key={item.id} className="overflow-hidden flex flex-col">
-            <CardHeader className="flex-row items-start gap-4 space-y-0">
-               <Image src={item.image} alt={item.name} width={80} height={80} className="rounded-md object-cover border" data-ai-hint="food item" />
-               <div className="flex-1">
-                <CardTitle>{item.name}</CardTitle>
-                <p className="text-xl font-semibold text-primary mt-1">${item.price.toFixed(2)}</p>
-              </div>
-            </CardHeader>
-            <CardContent className="flex-grow">
-              <p className="text-sm text-muted-foreground">{item.description}</p>
-            </CardContent>
-            <CardFooter className="bg-muted/40 p-3 flex justify-end">
-               <Button variant="outline" size="sm">
-                  <Trash2 className="mr-2 h-4 w-4" /> Delete
-               </Button>
-            </CardFooter>
-          </Card>
-        ))}
-      </div>
+      {menuItems.length === 0 && !isAdding ? (
+        <div className="text-center py-16 border-2 border-dashed rounded-lg">
+          <p className="text-muted-foreground">You haven't added any menu items yet.</p>
+          <p className="text-muted-foreground">Click "Add New Item" to get started.</p>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {menuItems.map((item) => (
+            <Card key={item.id} className="overflow-hidden flex flex-col">
+              <CardHeader className="flex-row items-start gap-4 space-y-0">
+                <Image src={item.image} alt={item.name} width={80} height={80} className="rounded-md object-cover border" data-ai-hint="food item" />
+                <div className="flex-1">
+                  <CardTitle>{item.name}</CardTitle>
+                  <p className="text-xl font-semibold text-primary mt-1">₹{item.price.toFixed(2)}</p>
+                </div>
+              </CardHeader>
+              <CardContent className="flex-grow">
+                <p className="text-sm text-muted-foreground">{item.description}</p>
+              </CardContent>
+              <CardFooter className="bg-muted/40 p-3 flex justify-end">
+                <Button variant="outline" size="sm">
+                    <Trash2 className="mr-2 h-4 w-4" /> Delete
+                </Button>
+              </CardFooter>
+            </Card>
+          ))}
+        </div>
+      )}
     </section>
   );
 }
