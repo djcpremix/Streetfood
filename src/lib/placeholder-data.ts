@@ -1,3 +1,4 @@
+
 export type MenuItem = {
   id: string;
   name: string;
@@ -43,6 +44,9 @@ export type Distributor = {
   reviewsCount: number;
   image: string;
   products: RawMaterial[];
+  ownerName: string;
+  location: string;
+  companyRegistered: boolean;
 };
 
 export type DeliveryPerson = {
@@ -71,129 +75,104 @@ export type BlogPost = {
 };
 
 const reviews: Review[] = [
-    { id: 'r1', author: 'Jane Doe', rating: 4.5, comment: "Absolutely delicious tacos, the best I've had in a while! The salsa was perfectly spicy.", date: '2 days ago' },
-    { id: 'r2', author: 'John Smith', rating: 5, comment: "A must-try! The Chole Bhature is out of this world. Quick service too.", date: '5 days ago' },
-    { id: 'r3', author: 'Emily White', rating: 4, comment: "Great food, reasonable prices. The momos were fantastic. A bit crowded though.", date: '1 week ago' },
+    { id: 'r1', author: 'Priya Sharma', rating: 4.5, comment: "Fresh and high-quality ingredients every time. Very reliable.", date: '2 days ago' },
+    { id: 'r2', author: 'Rahul Verma', rating: 5, comment: "Excellent service and the best prices for bulk orders. Highly recommend!", date: '5 days ago' },
+    { id: 'r3', author: 'Anjali Mehta', rating: 4, comment: "Good selection of products. Delivery was on time. Will order again.", date: '1 week ago' },
 ];
 
 const menus: { [key: string]: MenuItem[] } = {
     tacos: [
-        { id: 'm1', name: 'Carne Asada Tacos', description: 'Grilled steak tacos on fresh corn tortillas.', price: 3.50, image: 'https://placehold.co/300x300.png' },
-        { id: 'm2', name: 'Al Pastor Tacos', description: 'Spit-grilled pork with pineapple and onions.', price: 3.00, image: 'https://placehold.co/300x300.png' },
-        { id: 'm3', name: 'Veggie Tacos', description: 'Grilled peppers, onions, and zucchini with guac.', price: 2.75, image: 'https://placehold.co/300x300.png' },
+        { id: 'm1', name: 'Carne Asada Tacos', description: 'Grilled steak tacos on fresh corn tortillas.', price: 150, image: 'https://placehold.co/300x300.png' },
+        { id: 'm2', name: 'Al Pastor Tacos', description: 'Spit-grilled pork with pineapple and onions.', price: 120, image: 'https://placehold.co/300x300.png' },
     ],
     indian: [
-        { id: 'm4', name: 'Chole Bhature', description: 'Spicy chickpea curry with fried bread.', price: 8.99, image: 'https://placehold.co/300x300.png' },
-        { id: 'm5', name: 'Pani Puri (Golgappe)', description: 'Hollow puri filled with flavored water, tamarind chutney.', price: 5.49, image: 'https://placehold.co/300x300.png' },
-        { id: 'm6', name: 'Aloo Tikki Chaat', description: 'Spiced potato patties with yogurt and chutneys.', price: 6.99, image: 'https://placehold.co/300x300.png' },
-    ],
-    asian: [
-        { id: 'm7', name: 'Steamed Chicken Momos', description: 'Juicy chicken dumplings served with a spicy dip.', price: 7.50, image: 'https://placehold.co/300x300.png' },
-        { id: 'm8', name: 'Pad Thai Noodles', description: 'Stir-fried rice noodles with shrimp, tofu, and peanuts.', price: 10.50, image: 'https://placehold.co/300x300.png' },
-        { id: 'm9', name: 'Banh Mi Sandwich', description: 'Vietnamese sandwich with grilled pork and pickled veg.', price: 9.00, image: 'https://placehold.co/300x300.png' },
-    ],
-    pizza: [
-      { id: 'm10', name: 'Margherita Slice', description: 'Classic cheese, tomato, and basil on a crispy crust.', price: 4.00, image: 'https://placehold.co/300x300.png' },
-      { id: 'm11', name: 'Pepperoni Slice', description: 'A timeless classic with spicy pepperoni.', price: 4.50, image: 'https://placehold.co/300x300.png' },
-      { id: 'm12', name: 'Garlic Knots (4pcs)', description: 'Dough knots baked and tossed in garlic butter.', price: 3.50, image: 'https://placehold.co/300x300.png' },
+        { id: 'm4', name: 'Chole Bhature', description: 'Spicy chickpea curry with fried bread.', price: 250, image: 'https://placehold.co/300x300.png' },
+        { id: 'm5', name: 'Pani Puri (Golgappe)', description: 'Hollow puri filled with flavored water, tamarind chutney.', price: 100, image: 'https://placehold.co/300x300.png' },
     ],
 };
 
 export const vendors: Vendor[] = [
   {
     id: '1',
-    name: "Tony's Taco Truck",
-    cuisine: 'Mexican',
+    name: "Auntie's Kitchen",
+    cuisine: 'Maharashtrian',
     rating: 4.8,
     reviewsCount: 124,
-    distance: '0.5 miles',
+    distance: '1.5 km',
     image: 'https://placehold.co/600x400.png',
-    address: '123 Market St, San Francisco, CA',
-    menu: menus.tacos,
-    reviews: reviews,
-  },
-  {
-    id: '2',
-    name: 'Delhi Delights',
-    cuisine: 'Indian',
-    rating: 4.9,
-    reviewsCount: 250,
-    distance: '1.2 miles',
-    image: 'https://placehold.co/600x400.png',
-    address: '456 Curry Ln, Fremont, CA',
+    address: 'FC Road, Pune',
     menu: menus.indian,
     reviews: reviews,
   },
   {
-    id: '3',
-    name: "Mama Lin's Kitchen",
-    cuisine: 'Asian Fusion',
-    rating: 4.7,
-    reviewsCount: 88,
-    distance: '0.8 miles',
+    id: '2',
+    name: 'Mumbai Magic',
+    cuisine: 'Street Food',
+    rating: 4.9,
+    reviewsCount: 250,
+    distance: '3.2 km',
     image: 'https://placehold.co/600x400.png',
-    address: '789 Noodle Ave, Oakland, CA',
-    menu: menus.asian,
-    reviews: reviews,
-  },
-  {
-    id: '4',
-    name: "Brooklyn Pizza Slice",
-    cuisine: 'Italian',
-    rating: 4.6,
-    reviewsCount: 152,
-    distance: '2.1 miles',
-    image: 'https://placehold.co/600x400.png',
-    address: '101 Pizza Pl, Berkeley, CA',
-    menu: menus.pizza,
+    address: 'Koregaon Park, Pune',
+    menu: menus.indian,
     reviews: reviews,
   },
 ];
 
 const rawMaterials: { [key: string]: RawMaterial[] } = {
-  vegetables: [
-    { id: 'rm1', name: 'Onions', price: 40, unit: 'kg', image: 'https://placehold.co/300x300.png' },
-    { id: 'rm2', name: 'Potatoes', price: 30, unit: 'kg', image: 'https://placehold.co/300x300.png' },
-    { id: 'rm3', name: 'Tomatoes', price: 50, unit: 'kg', image: 'https://placehold.co/300x300.png' },
+  puneVeggies: [
+    { id: 'rm1', name: 'Onions (Nashik)', price: 40, unit: 'kg', image: 'https://placehold.co/300x300.png' },
+    { id: 'rm2', name: 'Potatoes (Talegaon)', price: 30, unit: 'kg', image: 'https://placehold.co/300x300.png' },
+    { id: 'rm3', name: 'Tomatoes (Junnar)', price: 50, unit: 'kg', image: 'https://placehold.co/300x300.png' },
+    { id: 'rm10', name: 'Green Chillies', price: 60, unit: 'kg', image: 'https://placehold.co/300x300.png' },
   ],
-  dairy: [
-    { id: 'rm4', name: 'Amul Cheese', price: 250, unit: 'kg', image: 'https://placehold.co/300x300.png' },
-    { id: 'rm5', name: 'Paneer', price: 400, unit: 'kg', image: 'https://placehold.co/300x300.png' },
-    { id: 'rm6', name: 'Yogurt', price: 80, unit: 'kg', image: 'https://placehold.co/300x300.png' },
+  solapurGrains: [
+    { id: 'rm4', name: 'Besan (Gram Flour)', price: 80, unit: 'kg', image: 'https://placehold.co/300x300.png' },
+    { id: 'rm5', name: 'Jowar Flour', price: 60, unit: 'kg', image: 'https://placehold.co/300x300.png' },
+    { id: 'rm6', name: 'Basmati Rice', price: 120, unit: 'kg', image: 'https://placehold.co/300x300.png' },
   ],
-  meats: [
-    { id: 'rm7', name: 'Chicken Breast', price: 350, unit: 'kg', image: 'https://placehold.co/300x300.png' },
-    { id: 'rm8', name: 'Mutton', price: 700, unit: 'kg', image: 'https://placehold.co/300x300.png' },
+  kolhapurSpices: [
+    { id: 'rm7', name: 'Kolhapuri Masala', price: 400, unit: 'kg', image: 'https://placehold.co/300x300.png' },
+    { id: 'rm8', name: 'Turmeric Powder', price: 250, unit: 'kg', image: 'https://placehold.co/300x300.png' },
+    { id: 'rm9', name: 'Red Chilli Powder', price: 300, unit: 'kg', image: 'https://placehold.co/300x300.png' },
   ],
 };
 
 export const distributors: Distributor[] = [
   {
     id: 'd1',
-    name: 'Fresh Veggies Co.',
-    category: 'Fresh Produce',
+    name: 'Pune Fresh Produce',
+    category: 'Fresh Vegetables',
     rating: 4.8,
     reviewsCount: 150,
     image: 'https://placehold.co/600x400.png',
-    products: rawMaterials.vegetables,
+    products: rawMaterials.puneVeggies,
+    ownerName: 'Ramesh Patel',
+    location: 'Market Yard, Pune',
+    companyRegistered: true,
   },
   {
     id: 'd2',
-    name: 'Modern Dairy',
-    category: 'Dairy Products',
+    name: 'Solapur Grains & Flour Mill',
+    category: 'Grains & Flours',
     rating: 4.9,
     reviewsCount: 210,
     image: 'https://placehold.co/600x400.png',
-    products: rawMaterials.dairy,
+    products: rawMaterials.solapurGrains,
+    ownerName: 'Sunita Pawar',
+    location: 'MIDC, Solapur',
+    companyRegistered: true,
   },
   {
     id: 'd3',
-    name: 'Quality Meats Inc.',
-    category: 'Butcher',
+    name: 'Kolhapur Spice Co.',
+    category: 'Spices',
     rating: 4.7,
     reviewsCount: 95,
     image: 'https://placehold.co/600x400.png',
-    products: rawMaterials.meats,
+    products: rawMaterials.kolhapurSpices,
+    ownerName: 'Vikram Bhosle',
+    location: 'Kolhapur City',
+    companyRegistered: false,
   },
 ];
 
@@ -309,3 +288,5 @@ export const blogPosts: BlogPost[] = [
     `
   },
 ];
+
+    

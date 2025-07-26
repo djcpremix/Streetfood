@@ -1,10 +1,11 @@
+
 import Image from 'next/image';
 import Link from 'next/link';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { StarRating } from './StarRating';
 import type { Distributor } from '@/lib/placeholder-data';
-import { Truck } from 'lucide-react';
+import { MapPin } from 'lucide-react';
 
 type DistributorCardProps = {
   distributor: Distributor;
@@ -35,12 +36,14 @@ export function DistributorCard({ distributor }: DistributorCardProps) {
               <span>{distributor.rating.toFixed(1)} ({distributor.reviewsCount} reviews)</span>
             </div>
           </div>
-          <div className="flex items-center gap-2 text-sm text-primary font-medium mt-4">
-            <Truck className="h-4 w-4" />
-            <span>Delivers to your area</span>
+          <div className="flex items-center gap-2 text-sm text-muted-foreground mt-4">
+            <MapPin className="h-4 w-4 text-primary" />
+            <span>{distributor.location}</span>
           </div>
         </CardContent>
       </Card>
     </Link>
   );
 }
+
+    
