@@ -1,4 +1,4 @@
-import { initializeApp, getApps, getApp } from "firebase/app";
+import { initializeApp, getApps, getApp, FirebaseApp } from "firebase/app";
 import { getAuth, GoogleAuthProvider } from "firebase/auth";
 
 const firebaseConfig = {
@@ -11,9 +11,15 @@ const firebaseConfig = {
   "messagingSenderId": "236972503189"
 };
 
-// Initialize Firebase
-const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
-const auth = getAuth(app);
-export const googleProvider = new GoogleAuthProvider();
+// Initialize Firebase for SSR
+let app: FirebaseApp;
+if (!getApps().length) {
+  app = initializeApp(firebaseConfig);
+} else {
+  app = getApp();
+}
 
-export { app, auth };
+const auth = getAuth(app);
+const googleProvider = new GoogleAuthProvider();
+
+export { app, auth, googleProvider };
