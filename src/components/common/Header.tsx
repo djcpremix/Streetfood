@@ -26,9 +26,6 @@ export function Header() {
            <Link href="/delivery" className="transition-colors hover:text-primary">
             Delivery
           </Link>
-          <Link href="/recommendations" className="transition-colors hover:text-primary">
-            AI Tools
-          </Link>
           <Link href="/dashboard" className="transition-colors hover:text-primary">
             Dashboard
           </Link>
@@ -56,5 +53,3 @@ export function Header() {
     </header>
   );
 }
-
-    
