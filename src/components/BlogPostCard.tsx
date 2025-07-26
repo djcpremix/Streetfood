@@ -12,7 +12,7 @@ type BlogPostCardProps = {
 
 export function BlogPostCard({ post }: BlogPostCardProps) {
   return (
-    <Link href="#" className="block group">
+    <Link href={`/blog/${post.id}`} className="block group">
       <Card className="hover:shadow-xl transition-shadow duration-300 h-full flex flex-col overflow-hidden">
         <CardHeader className="p-0">
           <div className="relative h-56 w-full overflow-hidden">
@@ -53,5 +53,3 @@ export function BlogPostCard({ post }: BlogPostCardProps) {
     </Link>
   );
 }
-
-    
