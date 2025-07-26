@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Badge } from '@/components/ui/badge';
 import { StarRating } from './StarRating';
 import type { DeliveryPerson } from '@/lib/placeholder-data';
-import { Moped, Award } from 'lucide-react';
+import { Bike, Award } from 'lucide-react';
 
 type DeliveryPersonCardProps = {
   person: DeliveryPerson;
@@ -39,7 +39,7 @@ export function DeliveryPersonCard({ person }: DeliveryPersonCardProps) {
                     <span>{person.experience} experience</span>
                 </div>
                 <div className="flex items-center gap-2 text-sm text-muted-foreground font-medium">
-                    <Moped className="h-4 w-4 text-primary" />
+                    <Bike className="h-4 w-4 text-primary" />
                     <span>Uses a {person.vehicle}</span>
                 </div>
             </div>
@@ -48,5 +48,3 @@ export function DeliveryPersonCard({ person }: DeliveryPersonCardProps) {
     </Link>
   );
 }
-
-    

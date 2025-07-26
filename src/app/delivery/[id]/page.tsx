@@ -3,7 +3,7 @@ import { deliveryPersonnel } from '@/lib/placeholder-data';
 import { notFound } from 'next/navigation';
 import { StarRating } from '@/components/StarRating';
 import { Badge } from '@/components/ui/badge';
-import { Moped, Award, MapPin } from 'lucide-react';
+import { Bike, Award, MapPin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 
@@ -59,7 +59,7 @@ export default function DeliveryPersonDetailPage({ params }: { params: { id: str
                                 </div>
                             </div>
                             <div className="flex items-center gap-4">
-                                <Moped className="h-6 w-6 text-primary" />
+                                <Bike className="h-6 w-6 text-primary" />
                                 <div>
                                     <p className="font-semibold">Vehicle</p>
                                     <p className="text-muted-foreground">{person.vehicle}</p>
@@ -88,5 +88,3 @@ export default function DeliveryPersonDetailPage({ params }: { params: { id: str
 
 // We need to add Card components to this page to make it look better
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-
-    
