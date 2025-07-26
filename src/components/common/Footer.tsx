@@ -28,6 +28,7 @@ export function Footer() {
               <h3 className="font-semibold mb-4">For Vendors</h3>
               <nav className="flex flex-col space-y-2">
                 <Link href="/seller" className="text-sm text-muted-foreground hover:text-primary">Become a Vendor</Link>
+                <Link href="/delivery" className="text-sm text-muted-foreground hover:text-primary">Delivery Partners</Link>
               </nav>
             </div>
             <div>
