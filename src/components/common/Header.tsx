@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { UtensilsCrossed, LayoutDashboard } from 'lucide-react';
+import { UtensilsCrossed } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 export function Header() {
@@ -21,12 +21,12 @@ export function Header() {
             Dashboard
           </Link>
         </nav>
-        <div className="flex flex-1 items-center justify-end space-x-4">
+        <div className="flex flex-1 items-center justify-end space-x-2">
+          <Button variant="ghost" asChild>
+            <Link href="/login">Log In</Link>
+          </Button>
           <Button asChild>
-            <Link href="/dashboard">
-              <LayoutDashboard className="mr-2 h-5 w-5" />
-              Vendor Dashboard
-            </Link>
+            <Link href="/signup">Sign Up</Link>
           </Button>
         </div>
       </div>
