@@ -1,6 +1,6 @@
 'use server';
 
-import { productNamerFlow } from '@/ai/flows/productNamer';
+import { getProductRecommendations } from '@/ai/flows/productNamer';
 
 export async function getRecommendations(productName: string): Promise<{
   success: boolean;
@@ -11,7 +11,7 @@ export async function getRecommendations(productName: string): Promise<{
     return { success: true, data: [] };
   }
   try {
-    const result = await productNamerFlow(productName);
+    const result = await getProductRecommendations(productName);
     return { success: true, data: result };
   } catch (e: any) {
     console.error('Error running productNamerFlow:', e);
