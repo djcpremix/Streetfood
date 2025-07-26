@@ -55,6 +55,7 @@ export type DeliveryPerson = {
   image: string;
   bio: string;
   deliveryRange: string;
+  reviews: Review[];
 };
 
 const reviews: Review[] = [
@@ -195,6 +196,7 @@ export const deliveryPersonnel: DeliveryPerson[] = [
     image: 'https://i.pravatar.cc/150?u=dp1',
     bio: 'Fast and reliable delivery partner with extensive knowledge of the city. Always on time.',
     deliveryRange: '15 km radius',
+    reviews: reviews.slice(0, 2),
   },
   {
     id: 'dp2',
@@ -206,6 +208,7 @@ export const deliveryPersonnel: DeliveryPerson[] = [
     image: 'https://i.pravatar.cc/150?u=dp2',
     bio: 'Friendly and professional, ensuring your orders are handled with care.',
     deliveryRange: '10 km radius',
+    reviews: reviews.slice(1, 3),
   },
   {
     id: 'dp3',
@@ -217,7 +220,6 @@ export const deliveryPersonnel: DeliveryPerson[] = [
     image: 'https://i.pravatar.cc/150?u=dp3',
     bio: 'Veteran delivery expert. Known for exceptional service and speed.',
     deliveryRange: '20 km radius',
+    reviews: reviews.slice(0, 1),
   },
 ];
-
-    

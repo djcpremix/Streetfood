@@ -6,6 +6,8 @@ import { Badge } from '@/components/ui/badge';
 import { Bike, Award, MapPin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
+import { Card, CardContent, CardHeader, CardFooter } from '@/components/ui/card';
+import { Reviews } from '@/components/Reviews';
 
 export default function DeliveryPersonDetailPage({ params }: { params: { id: string } }) {
   const person = deliveryPersonnel.find((d) => d.id === params.id);
@@ -16,9 +18,9 @@ export default function DeliveryPersonDetailPage({ params }: { params: { id: str
 
   return (
     <main className="container py-8 md:py-12">
-        <div className="grid md:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-3 gap-12">
             <div className="md:col-span-1">
-                <Card className="sticky top-24">
+                <Card className="sticky top-24 shadow-lg">
                     <CardHeader className="p-0">
                          <Image
                             src={person.image}
@@ -44,47 +46,45 @@ export default function DeliveryPersonDetailPage({ params }: { params: { id: str
                 </Card>
             </div>
             <div className="md:col-span-2">
-                <h2 className="text-3xl font-bold font-headline">About {person.name.split(' ')[0]}</h2>
-                <p className="mt-4 text-lg text-muted-foreground">{person.bio}</p>
-                <Separator className="my-8" />
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-                    <div>
-                        <h3 className="text-xl font-bold font-headline mb-4">Details</h3>
-                        <div className="space-y-4">
-                            <div className="flex items-center gap-4">
-                                <Award className="h-6 w-6 text-primary" />
-                                <div>
-                                    <p className="font-semibold">Experience</p>
-                                    <p className="text-muted-foreground">{person.experience}</p>
-                                </div>
-                            </div>
-                            <div className="flex items-center gap-4">
-                                <Bike className="h-6 w-6 text-primary" />
-                                <div>
-                                    <p className="font-semibold">Vehicle</p>
-                                    <p className="text-muted-foreground">{person.vehicle}</p>
-                                </div>
-                            </div>
-                             <div className="flex items-center gap-4">
-                                <MapPin className="h-6 w-6 text-primary" />
-                                <div>
-                                    <p className="font-semibold">Delivery Range</p>
-                                    <p className="text-muted-foreground">{person.deliveryRange}</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                     <div>
-                        <h3 className="text-xl font-bold font-headline mb-4">Reviews</h3>
-                        <p className="text-muted-foreground italic">Review system coming soon...</p>
-                        {/* We will add the review component here later */}
-                    </div>
-                </div>
+                <section>
+                  <h2 className="text-3xl font-bold font-headline">About {person.name.split(' ')[0]}</h2>
+                  <p className="mt-4 text-lg text-muted-foreground">{person.bio}</p>
+                  <Separator className="my-8" />
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+                      <div>
+                          <h3 className="text-xl font-bold font-headline mb-4">Details</h3>
+                          <div className="space-y-4">
+                              <div className="flex items-center gap-4">
+                                  <Award className="h-6 w-6 text-primary" />
+                                  <div>
+                                      <p className="font-semibold">Experience</p>
+                                      <p className="text-muted-foreground">{person.experience}</p>
+                                  </div>
+                              </div>
+                              <div className="flex items-center gap-4">
+                                  <Bike className="h-6 w-6 text-primary" />
+                                  <div>
+                                      <p className="font-semibold">Vehicle</p>
+                                      <p className="text-muted-foreground">{person.vehicle}</p>
+                                  </div>
+                              </div>
+                               <div className="flex items-center gap-4">
+                                  <MapPin className="h-6 w-6 text-primary" />
+                                  <div>
+                                      <p className="font-semibold">Delivery Range</p>
+                                      <p className="text-muted-foreground">{person.deliveryRange}</p>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                </section>
+                <Separator className="my-12" />
+                <section>
+                    <Reviews reviews={person.reviews} />
+                </section>
             </div>
         </div>
     </main>
   );
 }
-
-// We need to add Card components to this page to make it look better
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
