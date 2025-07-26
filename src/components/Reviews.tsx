@@ -7,32 +7,42 @@ import { Separator } from '@/components/ui/separator';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import type { Review } from '@/lib/placeholder-data';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from './ui/form';
+import { useState } from 'react';
 
 const reviewSchema = z.object({
   comment: z.string().min(10, "Review must be at least 10 characters.").max(500, "Review cannot exceed 500 characters."),
-  rating: z.number().min(1).max(5),
+  rating: z.number().min(1, "Please select a rating.").max(5, "Rating cannot be more than 5."),
 })
 
 type ReviewsProps = {
   reviews: Review[];
 };
 
-export function Reviews({ reviews }: ReviewsProps) {
+export function Reviews({ reviews: initialReviews }: ReviewsProps) {
+  const [reviews, setReviews] = useState<Review[]>(initialReviews);
+
   const form = useForm<z.infer<typeof reviewSchema>>({
     resolver: zodResolver(reviewSchema),
     defaultValues: {
       comment: "",
-      rating: 5,
+      rating: 0,
     }
   })
   
   const onSubmit = (data: z.infer<typeof reviewSchema>) => {
     console.log(data);
-    // Here you would typically call a server action to submit the review
+    const newReview: Review = {
+      id: `r${reviews.length + 1}`,
+      author: "New User", // In a real app, this would come from the logged-in user
+      rating: data.rating,
+      comment: data.comment,
+      date: "Just now",
+    };
+    setReviews([newReview, ...reviews]);
     form.reset();
   };
   
@@ -77,10 +87,15 @@ export function Reviews({ reviews }: ReviewsProps) {
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Your Rating</FormLabel>
-                      {/* A real implementation would have a clickable star rating input */}
                       <FormControl>
-                        <StarRating rating={field.value} className="mt-1" />
+                        <StarRating 
+                          rating={field.value}
+                          onRate={(rating) => field.onChange(rating)}
+                          className="mt-1" 
+                          isEditable
+                        />
                       </FormControl>
+                       <FormMessage />
                     </FormItem>
                   )}
                 />
