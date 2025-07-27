@@ -33,7 +33,7 @@ export function RawMaterialCard({ material }: RawMaterialCardProps) {
           width={80} 
           height={80} 
           className="rounded-md object-cover border"
-          data-ai-hint="raw material"
+          data-ai-hint={material.name}
         />
         <div className="flex-1">
           <CardTitle className="text-lg">{material.name}</CardTitle>
