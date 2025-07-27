@@ -1,13 +1,15 @@
 'use client';
 
 import React, { createContext, useState, useContext, ReactNode } from 'react';
-import type { RawMaterial, MenuItem } from '@/lib/placeholder-data';
+import type { RawMaterial, MenuItem, Distributor } from '@/lib/placeholder-data';
+import { distributors } from '@/lib/placeholder-data';
 
 // A more generic item type that can be added to the cart
 type CartableItem = (RawMaterial | MenuItem) & { unit?: string };
 
 interface CartItem extends CartableItem {
   quantity: number;
+  distributorName: string;
 }
 
 interface CartContextType {
@@ -23,6 +25,15 @@ const CartContext = createContext<CartContextType | undefined>(undefined);
 export const CartProvider = ({ children }: { children: ReactNode }) => {
   const [cart, setCart] = useState<CartItem[]>([]);
 
+  const findDistributorName = (itemId: string): string => {
+      for (const distributor of distributors) {
+          if (distributor.products.some(p => p.id === itemId)) {
+              return distributor.name;
+          }
+      }
+      return 'StreetVendorConnect'; // Fallback name
+  }
+
   const addToCart = (item: CartableItem) => {
     setCart((prevCart) => {
       const existingItem = prevCart.find((cartItem) => cartItem.id === item.id);
@@ -34,8 +45,9 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
             : cartItem
         );
       } else {
+        const distributorName = findDistributorName(item.id);
         // If item doesn't exist, add it to the cart with quantity 1
-        return [...prevCart, { ...item, quantity: 1 }];
+        return [...prevCart, { ...item, quantity: 1, distributorName }];
       }
     });
   };

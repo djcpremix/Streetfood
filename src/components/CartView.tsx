@@ -64,6 +64,7 @@ export function CartView() {
                     </TableCell>
                     <TableCell>
                       <p className="font-medium">{item.name}</p>
+                      <p className="text-sm text-muted-foreground">from {item.distributorName}</p>
                       <p className="text-sm text-muted-foreground">Unit price: ₹{item.price.toFixed(2)}</p>
                     </TableCell>
                     <TableCell>

@@ -2,7 +2,7 @@
 
 import { useCart } from '@/context/CartContext';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardFooter, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { useToast } from '@/hooks/use-toast';
 import { useRouter } from 'next/navigation';
@@ -11,6 +11,13 @@ import { Input } from './ui/input';
 import { Label } from './ui/label';
 import { CreditCard, Banknote, Loader2 } from 'lucide-react';
 import { useState } from 'react';
+
+// Simple SVG icons for UPI apps. In a real app, you'd use higher quality images.
+const PhonePeIcon = () => <svg width="80" height="32" viewBox="0 0 128 32"><rect width="128" height="32" rx="8" fill="#5F259F"></rect><text x="64" y="20" fill="white" textAnchor="middle" fontSize="16" fontWeight="bold">PhonePe</text></svg>;
+const GooglePayIcon = () => <svg width="80" height="32" viewBox="0 0 128 32"><rect width="128" height="32" rx="8" fill="#4285F4"></rect><text x="64" y="20" fill="white" textAnchor="middle" fontSize="16" fontWeight="bold">G Pay</text></svg>;
+const BharatPeIcon = () => <svg width="80" height="32" viewBox="0 0 128 32"><rect width="128" height="32" rx="8" fill="#00AEEF"></rect><text x="64" y="20" fill="white" textAnchor="middle" fontSize="16" fontWeight="bold">BharatPe</text></svg>;
+const PaytmIcon = () => <svg width="80" height="32" viewBox="0 0 128 32"><rect width="128" height="32" rx="8" fill="#00B9F1"></rect><text x="64" y="20" fill="white" textAnchor="middle" fontSize="16" fontWeight="bold">Paytm</text></svg>;
+
 
 export function CheckoutForm() {
   const { cart, clearCart } = useCart();
@@ -27,12 +34,14 @@ export function CheckoutForm() {
     e.preventDefault();
     setIsLoading(true);
 
+    const distributors = [...new Set(cart.map(item => item.distributorName))].join(', ');
+
     // Simulate payment processing
     setTimeout(() => {
         setIsLoading(false);
         toast({
             title: "Payment Successful!",
-            description: "Your order has been placed. Thank you for your purchase!",
+            description: `Your order has been placed with ${distributors}. Thank you!`,
         });
         clearCart();
         router.push('/');
@@ -82,13 +91,22 @@ export function CheckoutForm() {
                             </div>
                         </TabsContent>
                         <TabsContent value="upi">
-                            <div className="space-y-4">
+                            <div className="space-y-6">
+                                <div>
+                                    <Label>Choose your UPI App</Label>
+                                    <div className="flex flex-wrap gap-4 mt-2">
+                                        <Button type="button" variant="outline" className="h-auto p-2"><PhonePeIcon /></Button>
+                                        <Button type="button" variant="outline" className="h-auto p-2"><GooglePayIcon /></Button>
+                                        <Button type="button" variant="outline" className="h-auto p-2"><BharatPeIcon /></Button>
+                                        <Button type="button" variant="outline" className="h-auto p-2"><PaytmIcon /></Button>
+                                    </div>
+                                </div>
                                 <div className="space-y-2">
-                                    <Label htmlFor="upiId">UPI ID</Label>
+                                    <Label htmlFor="upiId">Or Enter your UPI ID</Label>
                                     <Input id="upiId" placeholder="yourname@bank" required />
                                 </div>
                                 <p className="text-sm text-muted-foreground">
-                                    A payment request will be sent to your UPI app.
+                                    A payment request will be sent to your UPI app upon submission.
                                 </p>
                             </div>
                         </TabsContent>
@@ -115,14 +133,15 @@ export function CheckoutForm() {
           <CardHeader>
             <CardTitle>Order Summary</CardTitle>
           </CardHeader>
-          <CardContent className="space-y-2">
+          <CardContent className="space-y-3">
             {cart.map(item => (
                 <div key={item.id} className="flex justify-between items-start text-sm">
                     <div className="flex-1">
                         <p className="font-medium">{item.name}</p>
+                        <p className="text-xs text-muted-foreground">from {item.distributorName}</p>
                         <p className="text-muted-foreground">Qty: {item.quantity}</p>
                     </div>
-                    <p>₹{(item.price * item.quantity).toFixed(2)}</p>
+                    <p className="font-medium">₹{(item.price * item.quantity).toFixed(2)}</p>
                 </div>
             ))}
             <Separator className="my-4" />
