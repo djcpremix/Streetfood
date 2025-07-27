@@ -75,9 +75,7 @@ To get a local copy up and running, follow these simple steps.
       ```
 
 5.  **Open the application:**
-    - Open [http://localhost:9002](http://localhost:9002) in your browser to see the result.
-    - The Genkit developer UI will be available at [http://localhost:4000](http://localhost:4000).
+    - Open [http://localhost:7070](http://localhost:7070) in your browser to see the result.
+    - The Genkit developer UI will be available at [http://localhost:9090](http://localhost:9090).
 
 ---
-
-This README was generated with the help of an AI assistant.
