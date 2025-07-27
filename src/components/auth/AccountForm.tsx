@@ -33,6 +33,7 @@ const passwordSchema = z.object({
     path: ['confirmPassword'],
 });
 
+const MAX_FILE_SIZE_KB = 500;
 
 export function AccountForm() {
   const [isLoading, setIsLoading] = useState(false);
@@ -74,12 +75,17 @@ export function AccountForm() {
     return () => unsubscribe();
   }, [router, profileForm]);
   
-  const getBase64 = (file: File): Promise<string> => new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => resolve(reader.result as string);
-    reader.onerror = error => reject(error);
-  });
+  const getBase64 = (file: File): Promise<string> => {
+    return new Promise((resolve, reject) => {
+      if (file.size > MAX_FILE_SIZE_KB * 1024) {
+        return reject(new Error(`File size should not exceed ${MAX_FILE_SIZE_KB}KB`));
+      }
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result as string);
+      reader.onerror = error => reject(error);
+    });
+  }
   
   const handlePictureChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -100,8 +106,8 @@ export function AccountForm() {
 
       } catch (error: any) {
         let description = "An unexpected error occurred.";
-        if(error.code === 'auth/invalid-photo-url') {
-            description = "The selected image is too large. Please choose a smaller file.";
+        if (error.code === 'auth/invalid-photo-url' || error.message.includes('File size should not exceed')) {
+            description = `The selected image is too large. Please choose a file smaller than ${MAX_FILE_SIZE_KB}KB.`;
         }
         toast({
             variant: 'destructive',
@@ -194,7 +200,7 @@ export function AccountForm() {
                                     <AvatarFallback>{user.displayName?.charAt(0) || 'U'}</AvatarFallback>
                                 </Avatar>
                                 <div className='flex-1 space-y-2'>
-                                    <FormLabel>Profile Picture</FormLabel>
+                                    <FormLabel>Profile Picture (max {MAX_FILE_SIZE_KB}KB)</FormLabel>
                                     <FormControl>
                                         <Input type="file" accept="image/*" onChange={handlePictureChange} disabled={isLoading} />
                                     </FormControl>
@@ -313,3 +319,5 @@ export function AccountForm() {
     </div>
   );
 }
+
+    
