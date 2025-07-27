@@ -1,9 +1,20 @@
+
+'use client';
+
+import { useState } from 'react';
 import { DistributorCard } from '@/components/DistributorCard';
 import { distributors } from '@/lib/placeholder-data';
 import { SearchBar } from '@/components/SearchBar';
 import { NoSsr } from '@/components/common/NoSsr';
 
 export default function Home() {
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const filteredDistributors = distributors.filter((distributor) =>
+    distributor.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    distributor.location.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
     <main className="container py-8 md:py-12">
       <section className="text-center mb-12">
@@ -16,11 +27,14 @@ export default function Home() {
       </section>
 
       <NoSsr>
-        <SearchBar />
+        <SearchBar 
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
       </NoSsr>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-        {distributors.map((distributor) => (
+        {filteredDistributors.map((distributor) => (
           <DistributorCard key={distributor.id} distributor={distributor} />
         ))}
       </div>
