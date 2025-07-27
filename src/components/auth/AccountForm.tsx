@@ -8,33 +8,25 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { Loader2 } from 'lucide-react';
+import { Loader2, Utensils } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { useRouter } from 'next/navigation';
-import { onAuthStateChanged, User, updateProfile, reauthenticateWithCredential, EmailAuthProvider } from 'firebase/auth';
+import { onAuthStateChanged, User, updateProfile } from 'firebase/auth';
 import { auth } from '@/lib/firebase';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
-import { Separator } from '../ui/separator';
+import { Textarea } from '../ui/textarea';
+import Link from 'next/link';
 
 const profileSchema = z.object({
   fullName: z.string().min(2, 'Full name must be at least 2 characters.'),
   email: z.string().email().optional(),
   companyName: z.string().optional(),
-});
-
-const passwordSchema = z.object({
-    currentPassword: z.string().min(1, 'Current password is required.'),
-    newPassword: z.string().min(8, 'New password must be at least 8 characters.'),
-    confirmPassword: z.string(),
-}).refine(data => data.newPassword === data.confirmPassword, {
-    message: "New passwords don't match.",
-    path: ['confirmPassword'],
+  companyDescription: z.string().optional(),
 });
 
 export function AccountForm() {
   const [isLoading, setIsLoading] = useState(false);
-  const [isPasswordLoading, setIsPasswordLoading] = useState(false);
   const [user, setUser] = useState<User | null>(null);
   const { toast } = useToast();
   const router = useRouter();
@@ -45,17 +37,9 @@ export function AccountForm() {
       fullName: '',
       email: '',
       companyName: 'StreetVendorConnect', // Placeholder
+      companyDescription: '',
     },
   });
-
-  const passwordForm = useForm<z.infer<typeof passwordSchema>>({
-    resolver: zodResolver(passwordSchema),
-    defaultValues: {
-        currentPassword: '',
-        newPassword: '',
-        confirmPassword: '',
-    }
-  })
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -78,7 +62,9 @@ export function AccountForm() {
         displayName: values.fullName,
       });
 
+      // In a real app, you would save these to a database (e.g., Firestore)
       console.log("Updating company name to:", values.companyName);
+      console.log("Updating company description to:", values.companyDescription);
 
       toast({
         title: 'Profile Updated',
@@ -92,32 +78,6 @@ export function AccountForm() {
       });
     } finally {
       setIsLoading(false);
-    }
-  }
-
-  async function onPasswordSubmit(values: z.infer<typeof passwordSchema>) {
-    if(!user || !user.email) return;
-    setIsPasswordLoading(true);
-
-    try {
-        const credential = EmailAuthProvider.credential(user.email, values.currentPassword);
-        await reauthenticateWithCredential(user, credential);
-        await updatePassword(user, values.newPassword);
-
-        toast({
-            title: "Password Changed!",
-            description: "Your password has been updated successfully.",
-        });
-        passwordForm.reset();
-
-    } catch (error: any) {
-        toast({
-            variant: "destructive",
-            title: "Password Change Failed",
-            description: "Your current password was incorrect. Please try again.",
-        });
-    } finally {
-        setIsPasswordLoading(false);
     }
   }
   
@@ -135,8 +95,8 @@ export function AccountForm() {
             <Form {...profileForm}>
                 <form onSubmit={profileForm.handleSubmit(onProfileSubmit)}>
                 <CardHeader>
-                    <CardTitle className="text-2xl font-headline">Profile Information</CardTitle>
-                    <CardDescription>Update your personal details here.</CardDescription>
+                    <CardTitle className="text-2xl font-headline">Account Details</CardTitle>
+                    <CardDescription>Update your personal and business details here.</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-6">
                     <div className="flex items-center gap-6">
@@ -144,7 +104,7 @@ export function AccountForm() {
                             <AvatarImage src={user.photoURL || `https://i.pravatar.cc/150?u=${user.uid}`} alt={user.displayName || 'User'} />
                             <AvatarFallback>{user.displayName?.charAt(0) || 'U'}</AvatarFallback>
                         </Avatar>
-                        <p className="text-sm text-muted-foreground">Profile pictures are managed via your Google account or the social provider you used to sign in.</p>
+                         <p className="text-sm text-muted-foreground">Profile pictures are managed via the social provider you used to sign in. To change it, update your profile picture on that platform.</p>
                     </div>
                     <FormField
                     control={profileForm.control}
@@ -185,6 +145,19 @@ export function AccountForm() {
                           </FormItem>
                       )}
                       />
+                      <FormField
+                      control={profileForm.control}
+                      name="companyDescription"
+                      render={({ field }) => (
+                          <FormItem>
+                          <FormLabel>Company Description</FormLabel>
+                          <FormControl>
+                              <Textarea placeholder="Describe your business, your products, and what makes you special." {...field} rows={4} />
+                          </FormControl>
+                          <FormMessage />
+                          </FormItem>
+                      )}
+                      />
                 </CardContent>
                 <CardFooter className="justify-end">
                     <Button type="submit" disabled={isLoading}>
@@ -197,61 +170,15 @@ export function AccountForm() {
         </Card>
 
         <Card className="shadow-lg">
-             <Form {...passwordForm}>
-                <form onSubmit={passwordForm.handleSubmit(onPasswordSubmit)}>
-                    <CardHeader>
-                        <CardTitle className="text-2xl font-headline">Change Password</CardTitle>
-                        <CardDescription>Enter your current password to set a new one.</CardDescription>
-                    </CardHeader>
-                    <CardContent className="space-y-4">
-                        <FormField
-                            control={passwordForm.control}
-                            name="currentPassword"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Current Password</FormLabel>
-                                    <FormControl>
-                                        <Input type="password" placeholder="••••••••" {...field} />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                         <FormField
-                            control={passwordForm.control}
-                            name="newPassword"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>New Password</FormLabel>
-                                    <FormControl>
-                                        <Input type="password" placeholder="••••••••" {...field} />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                         <FormField
-                            control={passwordForm.control}
-                            name="confirmPassword"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Confirm New Password</FormLabel>
-                                    <FormControl>
-                                        <Input type="password" placeholder="••••••••" {...field} />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                    </CardContent>
-                    <CardFooter className="justify-end">
-                        <Button type="submit" disabled={isPasswordLoading}>
-                            {isPasswordLoading && <Loader2 className="mr-2 animate-spin" />}
-                            Change Password
-                        </Button>
-                    </CardFooter>
-                </form>
-            </Form>
+            <CardHeader>
+                <CardTitle className="text-2xl font-headline flex items-center gap-3"><Utensils /> Manage Your Products</CardTitle>
+                <CardDescription>Add, edit, or remove items from your menu. This is what customers will see when they browse your profile.</CardDescription>
+            </CardHeader>
+            <CardFooter>
+                <Button asChild>
+                    <Link href="/dashboard">Go to Dashboard</Link>
+                </Button>
+            </CardFooter>
         </Card>
     </div>
   );
