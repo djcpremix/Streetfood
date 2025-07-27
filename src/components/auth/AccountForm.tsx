@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useForm } from 'react-hook-form';
@@ -19,6 +20,7 @@ import { Separator } from '../ui/separator';
 const profileSchema = z.object({
   fullName: z.string().min(2, 'Full name must be at least 2 characters.'),
   email: z.string().email().optional(),
+  companyName: z.string().optional(),
   profilePicture: z.any().optional(),
 });
 
@@ -44,6 +46,7 @@ export function AccountForm() {
     defaultValues: {
       fullName: '',
       email: '',
+      companyName: 'StreetVendorConnect', // Placeholder
     },
   });
 
@@ -68,16 +71,33 @@ export function AccountForm() {
     });
     return () => unsubscribe();
   }, [router, profileForm]);
+  
+  const getBase64 = (file: File): Promise<string> => new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result as string);
+    reader.onerror = error => reject(error);
+  });
 
   async function onProfileSubmit(values: z.infer<typeof profileSchema>) {
     if (!user) return;
     setIsLoading(true);
     try {
+      let photoURL = user.photoURL;
+      if (values.profilePicture && values.profilePicture.length > 0) {
+        const file = values.profilePicture[0];
+        photoURL = await getBase64(file);
+      }
+
       await updateProfile(user, {
         displayName: values.fullName,
-        // In a real app, you'd upload the file and get a URL.
-        // photoURL: values.profilePicture ? URL.createObjectURL(values.profilePicture[0]) : user.photoURL
+        photoURL: photoURL,
       });
+
+      // Here you would also update the company name in your database (e.g., Firestore)
+      console.log("Updating company name to:", values.companyName);
+
+
       toast({
         title: 'Profile Updated',
         description: 'Your profile has been successfully updated.',
@@ -182,6 +202,19 @@ export function AccountForm() {
                         </FormItem>
                     )}
                     />
+                     <FormField
+                      control={profileForm.control}
+                      name="companyName"
+                      render={({ field }) => (
+                          <FormItem>
+                          <FormLabel>Company Name</FormLabel>
+                          <FormControl>
+                              <Input placeholder="e.g., My Awesome Company" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                          </FormItem>
+                      )}
+                      />
                 </CardContent>
                 <CardFooter className="justify-end">
                     <Button type="submit" disabled={isLoading}>
