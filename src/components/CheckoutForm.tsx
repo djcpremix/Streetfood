@@ -10,7 +10,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
 import { Input } from './ui/input';
 import { Label } from './ui/label';
 import { CreditCard, Banknote, Loader2 } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 // Simple SVG icons for UPI apps. In a real app, you'd use higher quality images.
 const PhonePeIcon = () => <svg width="80" height="32" viewBox="0 0 128 32"><rect width="128" height="32" rx="8" fill="#5F259F"></rect><text x="64" y="20" fill="white" textAnchor="middle" fontSize="16" fontWeight="bold">PhonePe</text></svg>;
@@ -30,6 +30,13 @@ export function CheckoutForm() {
   const taxAmount = subtotal * taxRate;
   const total = subtotal + taxAmount;
 
+  useEffect(() => {
+    if (cart.length === 0 && !isLoading) {
+      router.push('/');
+    }
+  }, [cart.length, isLoading, router]);
+
+
   const handlePayment = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
@@ -48,8 +55,7 @@ export function CheckoutForm() {
     }, 2000); // 2-second delay
   };
   
-  if (cart.length === 0 && !isLoading) {
-     router.push('/');
+  if (cart.length === 0) {
      return null;
   }
 
