@@ -82,27 +82,47 @@ export function AccountForm() {
   });
   
   const handlePictureChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-      const file = e.target.files?.[0];
-      if(file){
-          const base64 = await getBase64(file);
-          setPreviewImage(base64);
-          profileForm.setValue('profilePicture', [file]);
+    const file = e.target.files?.[0];
+    if (file && user) {
+      setIsLoading(true);
+      try {
+        const base64 = await getBase64(file);
+        setPreviewImage(base64);
+        
+        await updateProfile(user, {
+          photoURL: base64,
+        });
+
+        toast({
+          title: 'Profile Picture Updated',
+          description: 'Your new picture has been saved.',
+        });
+
+      } catch (error: any) {
+        let description = "An unexpected error occurred.";
+        if(error.code === 'auth/invalid-photo-url') {
+            description = "The selected image is too large. Please choose a smaller file.";
+        }
+        toast({
+            variant: 'destructive',
+            title: 'Upload Failed',
+            description,
+        });
+        setPreviewImage(user.photoURL); // Revert to old image on failure
+      } finally {
+          setIsLoading(false);
       }
-  }
+    }
+  };
 
   async function onProfileSubmit(values: z.infer<typeof profileSchema>) {
     if (!user) return;
     setIsLoading(true);
     try {
-      // NOTE: The photoURL is intentionally NOT updated here to avoid the
-      // "auth/invalid-photo-url" error. The proper fix is to use Firebase Storage,
-      // upload the file there, get the public URL, and save that URL.
-      // For now, we only update the displayName.
       await updateProfile(user, {
         displayName: values.fullName,
       });
 
-      // Here you would also update the company name in your database (e.g., Firestore)
       console.log("Updating company name to:", values.companyName);
 
       toast({
@@ -176,7 +196,7 @@ export function AccountForm() {
                                 <div className='flex-1 space-y-2'>
                                     <FormLabel>Profile Picture</FormLabel>
                                     <FormControl>
-                                        <Input type="file" accept="image/*" onChange={handlePictureChange} />
+                                        <Input type="file" accept="image/*" onChange={handlePictureChange} disabled={isLoading} />
                                     </FormControl>
                                     <FormMessage />
                                 </div>
