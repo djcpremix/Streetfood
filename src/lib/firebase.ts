@@ -5,7 +5,7 @@ const firebaseConfig = {
   "projectId": "streetvendorconnect-szkwb",
   "appId": "1:236972503189:web:85828ae597dd7162ff6b9c",
   "storageBucket": "streetvendorconnect-szkwb.firebasestorage.app",
-  "apiKey": "AIzaSyC8DfCUANY0qEd1akN8qycmp_4DjKwmZ9U",
+  "apiKey": ",
   "authDomain": "streetvendorconnect-szkwb.firebaseapp.com",
   "measurementId": "",
   "messagingSenderId": "236972503189"
