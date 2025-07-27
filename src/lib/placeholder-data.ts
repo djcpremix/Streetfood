@@ -34,6 +34,7 @@ export type RawMaterial = {
   price: number;
   unit: string;
   image: string;
+  distributorName?: string;
 };
 
 export type Distributor = {
@@ -77,6 +78,14 @@ export type BlogPost = {
   category: string;
   authorImage: string;
   content: string;
+};
+
+export type Testimonial = {
+  quote: string;
+  author: string;
+  company: string;
+  image: string;
+  hint: string;
 };
 
 const reviews: Review[] = [
@@ -125,38 +134,38 @@ export const vendors: Vendor[] = [
 
 const rawMaterials: { [key: string]: RawMaterial[] } = {
   puneVeggies: [
-    { id: 'rm1', name: 'Onions (Nashik)', price: 40, unit: 'kg', image: 'https://placehold.co/300x300.png' },
-    { id: 'rm2', name: 'Potatoes (Talegaon)', price: 30, unit: 'kg', image: 'https://placehold.co/300x300.png' },
-    { id: 'rm3', name: 'Tomatoes (Junnar)', price: 50, unit: 'kg', image: 'https://placehold.co/300x300.png' },
-    { id: 'rm10', name: 'Green Chillies', price: 60, unit: 'kg', image: 'https://placehold.co/300x300.png' },
+    { id: 'rm1', name: 'Onions (Nashik)', price: 40, unit: 'kg', image: 'https://placehold.co/300x300.png?text=Onions' },
+    { id: 'rm2', name: 'Potatoes (Talegaon)', price: 30, unit: 'kg', image: 'https://placehold.co/300x300.png?text=Potatoes' },
+    { id: 'rm3', name: 'Tomatoes (Junnar)', price: 50, unit: 'kg', image: 'https://placehold.co/300x300.png?text=Tomatoes' },
+    { id: 'rm10', name: 'Green Chillies', price: 60, unit: 'kg', image: 'https://placehold.co/300x300.png?text=Chillies' },
   ],
   solapurGrains: [
-    { id: 'rm4', name: 'Besan (Gram Flour)', price: 80, unit: 'kg', image: 'https://placehold.co/300x300.png' },
-    { id: 'rm5', name: 'Jowar Flour', price: 60, unit: 'kg', image: 'https://placehold.co/300x300.png' },
-    { id: 'rm6', name: 'Basmati Rice', price: 120, unit: 'kg', image: 'https://placehold.co/300x300.png' },
+    { id: 'rm4', name: 'Besan (Gram Flour)', price: 80, unit: 'kg', image: 'https://placehold.co/300x300.png?text=Besan' },
+    { id: 'rm5', name: 'Jowar Flour', price: 60, unit: 'kg', image: 'https://placehold.co/300x300.png?text=Jowar' },
+    { id: 'rm6', name: 'Basmati Rice', price: 120, unit: 'kg', image: 'https://placehold.co/300x300.png?text=Rice' },
   ],
   kolhapurSpices: [
-    { id: 'rm7', name: 'Kolhapuri Masala', price: 400, unit: 'kg', image: 'https://placehold.co/300x300.png' },
-    { id: 'rm8', name: 'Turmeric Powder', price: 250, unit: 'kg', image: 'https://placehold.co/300x300.png' },
-    { id: 'rm9', name: 'Red Chilli Powder', price: 300, unit: 'kg', image: 'https://placehold.co/300x300.png' },
+    { id: 'rm7', name: 'Kolhapuri Masala', price: 400, unit: 'kg', image: 'https://placehold.co/300x300.png?text=Spices' },
+    { id: 'rm8', name: 'Turmeric Powder', price: 250, unit: 'kg', image: 'https://placehold.co/300x300.png?text=Turmeric' },
+    { id: 'rm9', name: 'Red Chilli Powder', price: 300, unit: 'kg', image: 'https://placehold.co/300x300.png?text=Chilli+Powder' },
   ],
   sataraDairy: [
-    { id: 'rm11', name: 'Fresh Paneer', price: 350, unit: 'kg', image: 'https://placehold.co/300x300.png' },
-    { id: 'rm12', name: 'Amul Butter', price: 50, unit: '100g pack', image: 'https://placehold.co/300x300.png' },
-    { id: 'rm13', name: 'Gowardhan Ghee', price: 600, unit: 'litre', image: 'https://placehold.co/300x300.png' },
+    { id: 'rm11', name: 'Fresh Paneer', price: 350, unit: 'kg', image: 'https://placehold.co/300x300.png?text=Paneer' },
+    { id: 'rm12', name: 'Amul Butter', price: 50, unit: '100g pack', image: 'https://placehold.co/300x300.png?text=Butter' },
+    { id: 'rm13', name: 'Gowardhan Ghee', price: 600, unit: 'litre', image: 'https://placehold.co/300x300.png?text=Ghee' },
   ],
   deccanPackaging: [
-    { id: 'rm14', name: 'Takeaway Containers', price: 250, unit: '100 pcs', image: 'https://placehold.co/300x300.png' },
-    { id: 'rm15', name: 'Paper Bags (Medium)', price: 150, unit: '100 pcs', image: 'https://placehold.co/300x300.png' },
-    { id: 'rm16', name: 'Plastic Cutlery Set', price: 120, unit: '100 sets', image: 'https://placehold.co/300x300.png' },
+    { id: 'rm14', name: 'Takeaway Containers', price: 250, unit: '100 pcs', image: 'https://placehold.co/300x300.png?text=Containers' },
+    { id: 'rm15', name: 'Paper Bags (Medium)', price: 150, unit: '100 pcs', image: 'https://placehold.co/300x300.png?text=Paper+Bags' },
+    { id: 'rm16', name: 'Plastic Cutlery Set', price: 120, unit: '100 sets', image: 'https://placehold.co/300x300.png?text=Cutlery' },
   ],
   konkanOils: [
-    { id: 'rm17', name: 'Sunflower Oil', price: 1800, unit: '15L tin', image: 'https://placehold.co/300x300.png' },
-    { id: 'rm18', name: 'Groundnut Oil', price: 2200, unit: '15L tin', image: 'https://placehold.co/300x300.png' },
+    { id: 'rm17', name: 'Sunflower Oil', price: 1800, unit: '15L tin', image: 'https://placehold.co/300x300.png?text=Sunflower+Oil' },
+    { id: 'rm18', name: 'Groundnut Oil', price: 2200, unit: '15L tin', image: 'https://placehold.co/300x300.png?text=Groundnut+Oil' },
   ],
   beverages: [
-     { id: 'rm19', name: 'Cola Syrup', price: 500, unit: '5L bottle', image: 'https://placehold.co/300x300.png' },
-     { id: 'rm20', name: 'Mineral Water Boxes', price: 100, unit: 'box of 12', image: 'https://placehold.co/300x300.png' },
+     { id: 'rm19', name: 'Cola Syrup', price: 500, unit: '5L bottle', image: 'https://placehold.co/300x300.png?text=Cola+Syrup' },
+     { id: 'rm20', name: 'Mineral Water Boxes', price: 100, unit: 'box of 12', image: 'https://placehold.co/300x300.png?text=Water+Bottles' },
   ],
 };
 
@@ -375,5 +384,30 @@ export const blogPosts: BlogPost[] = [
       <p>Food safety is paramount for any food business, but it's especially critical for street vendors who often work in tight spaces and serve a high volume of customers.</p>
       <p>Following proper food safety protocols not only protects your customers from foodborne illness but also protects your business's reputation and helps you avoid fines or closure. Make sure you are up to date on your local health codes and that your staff is properly trained.</p>
     `
+  },
+];
+
+
+export const testimonials: Testimonial[] = [
+  {
+    quote: "StreetVendorConnect has been a game-changer for my business. I can now source the best ingredients at great prices without closing my stall for a day. The time I save is incredible!",
+    author: "Rani Gupta",
+    company: "Owner of Auntie's Kitchen, Pune",
+    image: "https://i.pravatar.cc/150?u=rani",
+    hint: "happy woman"
+  },
+  {
+    quote: "The quality of the produce is always top-notch, and the delivery is incredibly reliable. My customers have noticed the difference in my dishes. Highly recommended for any serious street food vendor.",
+    author: "Sameer Patil",
+    company: "Mumbai Magic Chaat, Mumbai",
+    image: "https://i.pravatar.cc/150?u=sameer",
+    hint: "happy man"
+  },
+  {
+    quote: "As a new vendor, finding trustworthy suppliers was my biggest hurdle. This platform made it so easy to connect with the best in the city. The user interface is simple and very easy to use.",
+    author: "Priya Singh",
+    company: "Delhi Bites, Solapur",
+    image: "https://i.pravatar.cc/150?u=priya",
+    hint: "smiling woman"
   },
 ];

@@ -4,6 +4,14 @@ import { Card, CardContent } from '@/components/ui/card';
 import { ArrowRight, Search, ShoppingCart, Truck } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel"
+import { testimonials } from '@/lib/placeholder-data';
 
 const featureCategories = [
   {
@@ -112,13 +120,31 @@ export default function Home() {
       {/* Testimonial Section */}
       <section className="py-16 md:py-24 bg-background">
         <div className="container max-w-4xl mx-auto text-center">
-            <div className="relative">
-                 <Image src="https://i.pravatar.cc/150?u=auntie" alt="Auntie's Kitchen" width={80} height={80} className="rounded-full mx-auto mb-4" data-ai-hint="happy woman" />
-            </div>
-           <blockquote className="text-xl md:text-2xl font-medium text-foreground">
-             "StreetVendorConnect has been a game-changer for my business. I can now source the best ingredients at great prices without closing my stall for a day. The time I save is incredible!"
-           </blockquote>
-           <p className="text-muted-foreground mt-4 font-semibold">- Owner of Auntie's Kitchen, Pune</p>
+          <Carousel
+            opts={{
+              align: "start",
+              loop: true,
+            }}
+            className="w-full"
+          >
+            <CarouselContent>
+              {testimonials.map((testimonial, index) => (
+                <CarouselItem key={index}>
+                  <div className="p-1">
+                    <div className="relative">
+                        <Image src={testimonial.image} alt={testimonial.author} width={80} height={80} className="rounded-full mx-auto mb-4" data-ai-hint={testimonial.hint} />
+                    </div>
+                    <blockquote className="text-xl md:text-2xl font-medium text-foreground">
+                      "{testimonial.quote}"
+                    </blockquote>
+                    <p className="text-muted-foreground mt-4 font-semibold">- {testimonial.author}, {testimonial.company}</p>
+                  </div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious />
+            <CarouselNext />
+          </Carousel>
         </div>
       </section>
 
