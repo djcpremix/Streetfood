@@ -40,6 +40,7 @@ export function AccountForm() {
   const [user, setUser] = useState<User | null>(null);
   const { toast } = useToast();
   const router = useRouter();
+  const [previewImage, setPreviewImage] = useState<string | null>(null);
 
   const profileForm = useForm<z.infer<typeof profileSchema>>({
     resolver: zodResolver(profileSchema),
@@ -65,6 +66,7 @@ export function AccountForm() {
         setUser(currentUser);
         profileForm.setValue('fullName', currentUser.displayName || '');
         profileForm.setValue('email', currentUser.email || '');
+        setPreviewImage(currentUser.photoURL);
       } else {
         router.push('/login');
       }
@@ -78,25 +80,30 @@ export function AccountForm() {
     reader.onload = () => resolve(reader.result as string);
     reader.onerror = error => reject(error);
   });
+  
+  const handlePictureChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+      const file = e.target.files?.[0];
+      if(file){
+          const base64 = await getBase64(file);
+          setPreviewImage(base64);
+          profileForm.setValue('profilePicture', [file]);
+      }
+  }
 
   async function onProfileSubmit(values: z.infer<typeof profileSchema>) {
     if (!user) return;
     setIsLoading(true);
     try {
-      let photoURL = user.photoURL;
-      if (values.profilePicture && values.profilePicture.length > 0) {
-        const file = values.profilePicture[0];
-        photoURL = await getBase64(file);
-      }
-
+      // NOTE: The photoURL is intentionally NOT updated here to avoid the
+      // "auth/invalid-photo-url" error. The proper fix is to use Firebase Storage,
+      // upload the file there, get the public URL, and save that URL.
+      // For now, we only update the displayName.
       await updateProfile(user, {
         displayName: values.fullName,
-        photoURL: photoURL,
       });
 
       // Here you would also update the company name in your database (e.g., Firestore)
       console.log("Updating company name to:", values.companyName);
-
 
       toast({
         title: 'Profile Updated',
@@ -163,13 +170,13 @@ export function AccountForm() {
                         render={({ field }) => (
                             <FormItem className="flex items-center gap-6">
                                 <Avatar className="h-20 w-20">
-                                    <AvatarImage src={user.photoURL || `https://i.pravatar.cc/150?u=${user.uid}`} alt={user.displayName || 'User'} />
+                                    <AvatarImage src={previewImage || `https://i.pravatar.cc/150?u=${user.uid}`} alt={user.displayName || 'User'} />
                                     <AvatarFallback>{user.displayName?.charAt(0) || 'U'}</AvatarFallback>
                                 </Avatar>
                                 <div className='flex-1 space-y-2'>
                                     <FormLabel>Profile Picture</FormLabel>
                                     <FormControl>
-                                        <Input type="file" accept="image/*" onChange={e => field.onChange(e.target.files)} />
+                                        <Input type="file" accept="image/*" onChange={handlePictureChange} />
                                     </FormControl>
                                     <FormMessage />
                                 </div>
