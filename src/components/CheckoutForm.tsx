@@ -28,7 +28,9 @@ export function CheckoutForm() {
   const subtotal = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
   const taxRate = 0.05; // 5% tax
   const taxAmount = subtotal * taxRate;
-  const total = subtotal + taxAmount;
+  const deliveryFee = subtotal > 0 ? 50.00 : 0;
+  const total = subtotal + taxAmount + deliveryFee;
+
 
   useEffect(() => {
     if (cart.length === 0 && !isLoading) {
@@ -155,8 +157,12 @@ export function CheckoutForm() {
               <span className="text-muted-foreground">Subtotal</span>
               <span className="font-medium">₹{subtotal.toFixed(2)}</span>
             </div>
+            <div className="flex justify-between text-sm">
+              <span className="text-muted-foreground">Delivery Fee</span>
+              <span className="font-medium">₹{deliveryFee.toFixed(2)}</span>
+            </div>
             <div className="flex justify-between text-sm text-muted-foreground">
-              <span>Taxes (5%)</span>
+              <span>GST & Other Taxes (5%)</span>
               <span>₹{taxAmount.toFixed(2)}</span>
             </div>
             <Separator className="my-4" />

@@ -15,7 +15,8 @@ export function CartView() {
   const subtotal = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
   const taxRate = 0.05; // 5% tax
   const taxAmount = subtotal * taxRate;
-  const total = subtotal + taxAmount;
+  const deliveryFee = subtotal > 0 ? 50.00 : 0;
+  const total = subtotal + taxAmount + deliveryFee;
 
   if (cart.length === 0) {
     return (
@@ -59,7 +60,7 @@ export function CartView() {
                         width={64} 
                         height={64}
                         className="rounded-md object-cover border"
-                        data-ai-hint="cart item"
+                        data-ai-hint={item.name}
                       />
                     </TableCell>
                     <TableCell>
@@ -103,8 +104,12 @@ export function CartView() {
               <span>Subtotal</span>
               <span className="font-medium">₹{subtotal.toFixed(2)}</span>
             </div>
+             <div className="flex justify-between text-muted-foreground">
+              <span>Delivery Fee</span>
+              <span>₹{deliveryFee.toFixed(2)}</span>
+            </div>
             <div className="flex justify-between text-muted-foreground">
-              <span>Taxes (5%)</span>
+              <span>GST & Other Taxes (5%)</span>
               <span>₹{taxAmount.toFixed(2)}</span>
             </div>
             <Separator />
