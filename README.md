@@ -1,11 +1,13 @@
 # StreetVendorConnect
 
-<img width="1902" height="916" alt="Screenshot 2025-07-27 190714" src="https://github.com/user-attachments/assets/0c7a77c2-0060-417f-85df-2d1422b191c1" />
-<img width="1893" height="910" alt="Screenshot 2025-07-27 190703" src="https://github.com/user-attachments/assets/cc566118-bcd4-4987-8803-56845f168916" />
-<img width="1897" height="908" alt="Screenshot 2025-07-27 190650" src="https://github.com/user-attachments/assets/24bec587-89c8-4634-9ee9-eac9b81a7dd5" />
-<img width="1901" height="915" alt="Screenshot 2025-07-27 190637" src="https://github.com/user-attachments/assets/f3b873a6-d4c0-43c8-bbca-97fcafe1dd55" />
-<img width="1897" height="913" alt="Screenshot 2025-07-27 190623" src="https://github.com/user-attachments/assets/01694732-2a3c-48d1-a732-61ba963226f4" />
-<img width="1894" height="904" alt="Screenshot 2025-07-27 190555" src="https://github.com/user-attachments/assets/79b6523b-e4d6-4316-b507-b9b740b6a369" />
+<img width="1894" height="904" alt="Screenshot 2025-07-27 190555" src="https://github.com/user-attachments/assets/b094e54e-fe64-4066-8e1f-5fd5eb5cda65" />
+<img width="1897" height="913" alt="Screenshot 2025-07-27 190623" src="https://github.com/user-attachments/assets/040fef8d-a637-4dba-b81b-5df7120e63e9" />
+<img width="1901" height="915" alt="Screenshot 2025-07-27 190637" src="https://github.com/user-attachments/assets/d6eb3866-5cf0-4a81-b8a0-1ee17183f2ef" />
+<img width="1893" height="910" alt="Screenshot 2025-07-27 190703" src="https://github.com/user-attachments/assets/d35e0376-09ad-44c1-a981-3e9362de5b7c" />
+<img width="1897" height="908" alt="Screenshot 2025-07-27 190650" src="https://github.com/user-attachments/assets/95702c87-12d2-47d3-aa6f-9a0f0766383a" />
+<img width="1902" height="916" alt="Screenshot 2025-07-27 190714" src="https://github.com/user-attachments/assets/6d35a310-514c-4685-8671-96a17ea2f8d6" />
+
+
 
 **StreetVendorConnect is a full-stack B2B web platform designed to empower street food entrepreneurs by connecting them with raw material suppliers and delivery partners.**
 
