@@ -70,7 +70,7 @@ export default function Home() {
           <p className="text-muted-foreground max-w-2xl mx-auto mb-12 animate-fade-in animation-delay-200">Ordering supplies for your business is as easy as 1-2-3.</p>
           <div className="grid md:grid-cols-3 gap-8 text-left">
             <div className="animate-slide-in-from-bottom-slow">
-              <Card className="shadow-lg h-full">
+              <Card className="shadow-lg h-full hover:shadow-xl transition-shadow">
                 <CardContent className="p-6">
                    <div className="bg-primary/10 text-primary p-3 rounded-full w-fit mb-4">
                       <Search className="h-8 w-8" />
@@ -81,7 +81,7 @@ export default function Home() {
               </Card>
             </div>
             <div className="animate-slide-in-from-bottom-slow animation-delay-200">
-               <Card className="shadow-lg h-full">
+               <Card className="shadow-lg h-full hover:shadow-xl transition-shadow">
                 <CardContent className="p-6">
                    <div className="bg-primary/10 text-primary p-3 rounded-full w-fit mb-4">
                       <ShoppingCart className="h-8 w-8" />
@@ -92,7 +92,7 @@ export default function Home() {
               </Card>
             </div>
             <div className="animate-slide-in-from-bottom-slow animation-delay-400">
-               <Card className="shadow-lg h-full">
+               <Card className="shadow-lg h-full hover:shadow-xl transition-shadow">
                 <CardContent className="p-6">
                    <div className="bg-primary/10 text-primary p-3 rounded-full w-fit mb-4">
                       <Truck className="h-8 w-8" />
