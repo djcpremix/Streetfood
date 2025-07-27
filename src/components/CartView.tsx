@@ -8,24 +8,14 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import Image from 'next/image';
 import Link from 'next/link';
 import { Plus, Minus, Trash2, ShoppingCart } from 'lucide-react';
-import { useToast } from '@/hooks/use-toast';
 
 export function CartView() {
-  const { cart, removeFromCart, updateQuantity, clearCart } = useCart();
-  const { toast } = useToast();
+  const { cart, removeFromCart, updateQuantity } = useCart();
 
   const subtotal = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
   const taxRate = 0.05; // 5% tax
   const taxAmount = subtotal * taxRate;
   const total = subtotal + taxAmount;
-
-  const handleCheckout = () => {
-    toast({
-      title: "Checkout Successful!",
-      description: "Your order has been placed. (This is a simulation)",
-    });
-    clearCart();
-  }
 
   if (cart.length === 0) {
     return (
@@ -41,7 +31,7 @@ export function CartView() {
   }
 
   return (
-    <div className="grid lg:grid-cols-3 gap-8">
+    <div className="grid lg:grid-cols-3 gap-8 items-start">
       <div className="lg:col-span-2">
         <Card>
           <CardHeader>
@@ -102,7 +92,7 @@ export function CartView() {
         </Card>
       </div>
       
-      <div>
+      <div className="sticky top-24">
         <Card>
           <CardHeader>
             <CardTitle>Order Summary</CardTitle>
@@ -123,8 +113,10 @@ export function CartView() {
             </div>
           </CardContent>
           <CardFooter>
-            <Button size="lg" className="w-full" onClick={handleCheckout}>
-              Proceed to Checkout
+            <Button size="lg" className="w-full" asChild>
+                <Link href="/checkout">
+                    Proceed to Checkout
+                </Link>
             </Button>
           </CardFooter>
         </Card>
