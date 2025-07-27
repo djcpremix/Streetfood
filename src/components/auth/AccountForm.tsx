@@ -12,7 +12,7 @@ import { Loader2 } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { useRouter } from 'next/navigation';
-import { onAuthStateChanged, User, updateProfile, updatePassword, reauthenticateWithCredential, EmailAuthProvider } from 'firebase/auth';
+import { onAuthStateChanged, User, updateProfile, reauthenticateWithCredential, EmailAuthProvider } from 'firebase/auth';
 import { auth } from '@/lib/firebase';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 import { Separator } from '../ui/separator';
@@ -21,7 +21,6 @@ const profileSchema = z.object({
   fullName: z.string().min(2, 'Full name must be at least 2 characters.'),
   email: z.string().email().optional(),
   companyName: z.string().optional(),
-  profilePicture: z.any().optional(),
 });
 
 const passwordSchema = z.object({
@@ -33,15 +32,12 @@ const passwordSchema = z.object({
     path: ['confirmPassword'],
 });
 
-const MAX_FILE_SIZE_KB = 500;
-
 export function AccountForm() {
   const [isLoading, setIsLoading] = useState(false);
   const [isPasswordLoading, setIsPasswordLoading] = useState(false);
   const [user, setUser] = useState<User | null>(null);
   const { toast } = useToast();
   const router = useRouter();
-  const [previewImage, setPreviewImage] = useState<string | null>(null);
 
   const profileForm = useForm<z.infer<typeof profileSchema>>({
     resolver: zodResolver(profileSchema),
@@ -67,7 +63,6 @@ export function AccountForm() {
         setUser(currentUser);
         profileForm.setValue('fullName', currentUser.displayName || '');
         profileForm.setValue('email', currentUser.email || '');
-        setPreviewImage(currentUser.photoURL);
       } else {
         router.push('/login');
       }
@@ -75,52 +70,6 @@ export function AccountForm() {
     return () => unsubscribe();
   }, [router, profileForm]);
   
-  const getBase64 = (file: File): Promise<string> => {
-    return new Promise((resolve, reject) => {
-      if (file.size > MAX_FILE_SIZE_KB * 1024) {
-        return reject(new Error(`File size should not exceed ${MAX_FILE_SIZE_KB}KB`));
-      }
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result as string);
-      reader.onerror = error => reject(error);
-    });
-  }
-  
-  const handlePictureChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file && user) {
-      setIsLoading(true);
-      try {
-        const base64 = await getBase64(file);
-        setPreviewImage(base64);
-        
-        await updateProfile(user, {
-          photoURL: base64,
-        });
-
-        toast({
-          title: 'Profile Picture Updated',
-          description: 'Your new picture has been saved.',
-        });
-
-      } catch (error: any) {
-        let description = "An unexpected error occurred.";
-        if (error.code === 'auth/invalid-photo-url' || error.message.includes('File size should not exceed')) {
-            description = `The selected image is too large. Please choose a file smaller than ${MAX_FILE_SIZE_KB}KB.`;
-        }
-        toast({
-            variant: 'destructive',
-            title: 'Upload Failed',
-            description,
-        });
-        setPreviewImage(user.photoURL); // Revert to old image on failure
-      } finally {
-          setIsLoading(false);
-      }
-    }
-  };
-
   async function onProfileSubmit(values: z.infer<typeof profileSchema>) {
     if (!user) return;
     setIsLoading(true);
@@ -190,25 +139,13 @@ export function AccountForm() {
                     <CardDescription>Update your personal details here.</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-6">
-                     <FormField
-                        control={profileForm.control}
-                        name="profilePicture"
-                        render={({ field }) => (
-                            <FormItem className="flex items-center gap-6">
-                                <Avatar className="h-20 w-20">
-                                    <AvatarImage src={previewImage || `https://i.pravatar.cc/150?u=${user.uid}`} alt={user.displayName || 'User'} />
-                                    <AvatarFallback>{user.displayName?.charAt(0) || 'U'}</AvatarFallback>
-                                </Avatar>
-                                <div className='flex-1 space-y-2'>
-                                    <FormLabel>Profile Picture (max {MAX_FILE_SIZE_KB}KB)</FormLabel>
-                                    <FormControl>
-                                        <Input type="file" accept="image/*" onChange={handlePictureChange} disabled={isLoading} />
-                                    </FormControl>
-                                    <FormMessage />
-                                </div>
-                            </FormItem>
-                        )}
-                        />
+                    <div className="flex items-center gap-6">
+                        <Avatar className="h-20 w-20">
+                            <AvatarImage src={user.photoURL || `https://i.pravatar.cc/150?u=${user.uid}`} alt={user.displayName || 'User'} />
+                            <AvatarFallback>{user.displayName?.charAt(0) || 'U'}</AvatarFallback>
+                        </Avatar>
+                        <p className="text-sm text-muted-foreground">Profile pictures are managed via your Google account or the social provider you used to sign in.</p>
+                    </div>
                     <FormField
                     control={profileForm.control}
                     name="fullName"
@@ -319,5 +256,3 @@ export function AccountForm() {
     </div>
   );
 }
-
-    
